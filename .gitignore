@@ -6,6 +6,9 @@ node_modules
 .next
 .vercel
 
+# TypeScript incremental cache — ne verziózzuk (merge conflict forrása)
+tsconfig.tsbuildinfo
+
 # Payload default media upload directory
 public/media/
 
