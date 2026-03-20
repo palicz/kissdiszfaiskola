@@ -43,9 +43,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <InitTheme />
         {/* Material Symbols nincs next/font/google alatt; App Router root layout = globális betöltés */}
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- external icon font; display per Next recommendation */}
+        {/* display=swap: optional nem cseréli a fontot, ha késik — ligatúrák szövegként maradnak */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- external icon font */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&display=optional"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&display=swap"
           rel="stylesheet"
         />
       </head>
