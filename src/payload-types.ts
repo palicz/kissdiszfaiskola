@@ -228,6 +228,9 @@ export interface Page {
     | KissOurStoryBlock
     | KissPlantCatalogBlock
     | KissGalleryBlock
+    | KissSplitFeatureBlock
+    | KissLoyaltyHighlightsBlock
+    | KissCalloutBlock
     | KissNewsletterBlock
     | CallToActionBlock
     | ContentBlock
@@ -739,6 +742,73 @@ export interface KissGalleryBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'kissGallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissSplitFeatureBlock".
+ */
+export interface KissSplitFeatureBlock {
+  /**
+   * Opcionális, pl. kategória vagy rövid címke.
+   */
+  eyebrow?: string | null;
+  title: string;
+  showTitleRule?: boolean | null;
+  intro?: string | null;
+  bulletItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  image: number | Media;
+  imagePosition?: ('right' | 'left') | null;
+  /**
+   * Akadálymentesség; ha üres, a media alt mezője jön.
+   */
+  imageAlt?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissSplitFeature';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissLoyaltyHighlightsBlock".
+ */
+export interface KissLoyaltyHighlightsBlock {
+  title: string;
+  intro?: string | null;
+  items?:
+    | {
+        icon?: ('leaf' | 'star' | 'gift' | 'coins' | 'heart' | 'badge' | 'trending') | null;
+        heading: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissLoyaltyHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissCalloutBlock".
+ */
+export interface KissCalloutBlock {
+  tone?: ('info' | 'tip' | 'important') | null;
+  /**
+   * Opcionális rövid cím a szöveg felett.
+   */
+  title?: string | null;
+  body: string;
+  linkLabel?: string | null;
+  /**
+   * Teljes URL (https://…). Ha üres, a link nem jelenik meg.
+   */
+  linkUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissCallout';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1416,6 +1486,9 @@ export interface PagesSelect<T extends boolean = true> {
         kissOurStory?: T | KissOurStoryBlockSelect<T>;
         kissPlantCatalog?: T | KissPlantCatalogBlockSelect<T>;
         kissGallery?: T | KissGalleryBlockSelect<T>;
+        kissSplitFeature?: T | KissSplitFeatureBlockSelect<T>;
+        kissLoyaltyHighlights?: T | KissLoyaltyHighlightsBlockSelect<T>;
+        kissCallout?: T | KissCalloutBlockSelect<T>;
         kissNewsletter?: T | KissNewsletterBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
@@ -1594,6 +1667,58 @@ export interface KissGalleryBlockSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissSplitFeatureBlock_select".
+ */
+export interface KissSplitFeatureBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  showTitleRule?: T;
+  intro?: T;
+  bulletItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  image?: T;
+  imagePosition?: T;
+  imageAlt?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissLoyaltyHighlightsBlock_select".
+ */
+export interface KissLoyaltyHighlightsBlockSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        heading?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissCalloutBlock_select".
+ */
+export interface KissCalloutBlockSelect<T extends boolean = true> {
+  tone?: T;
+  title?: T;
+  body?: T;
+  linkLabel?: T;
+  linkUrl?: T;
   id?: T;
   blockName?: T;
 }
