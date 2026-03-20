@@ -42,8 +42,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         {/* Material Symbols nincs next/font/google alatt; App Router root layout = globális betöltés */}
         {/* eslint-disable-next-line @next/next/no-page-custom-font -- external icon font; display per Next recommendation */}
         <link
@@ -70,9 +68,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
+  title: 'Kiss Díszfaiskola',
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
   },
 }

@@ -1,11 +1,20 @@
 import canUseDOM from './canUseDOM'
 
+function normalizeBaseUrl(raw: string | undefined): string | undefined {
+  if (!raw?.trim()) return undefined
+  let u = raw.trim()
+  if (!/^https?:\/\//i.test(u)) {
+    u = `https://${u}`
+  }
+  return u.replace(/\/$/, '')
+}
+
 export const getServerSideURL = () => {
   return (
-    process.env.NEXT_PUBLIC_SERVER_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : 'http://localhost:3000')
+    normalizeBaseUrl(process.env.NEXT_PUBLIC_SERVER_URL) ||
+    normalizeBaseUrl(process.env.VERCEL_URL) ||
+    normalizeBaseUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+    'http://localhost:3000'
   )
 }
 
@@ -18,9 +27,5 @@ export const getClientSideURL = () => {
     return `${protocol}//${domain}${port ? `:${port}` : ''}`
   }
 
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  }
-
-  return process.env.NEXT_PUBLIC_SERVER_URL || ''
+  return getServerSideURL()
 }
