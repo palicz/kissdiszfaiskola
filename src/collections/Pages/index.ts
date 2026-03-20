@@ -8,7 +8,10 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { KissNewsletterCta } from '../../blocks/KissNewsletterCta/config'
 import { KissOurStory } from '../../blocks/KissOurStory/config'
+import { KissCallout } from '../../blocks/KissCallout/config'
 import { KissContactDetails } from '../../blocks/KissContactDetails/config'
+import { KissLoyaltyHighlights } from '../../blocks/KissLoyaltyHighlights/config'
+import { KissSplitFeature } from '../../blocks/KissSplitFeature/config'
 import { KissGallery } from '../../blocks/KissGallery/config'
 import { KissPlantCatalog } from '../../blocks/KissPlantCatalog/config'
 import { KissSpecimenShowcase } from '../../blocks/KissSpecimenShowcase/config'
@@ -86,6 +89,9 @@ export const Pages: CollectionConfig<'pages'> = {
                 KissOurStory,
                 KissPlantCatalog,
                 KissGallery,
+                KissSplitFeature,
+                KissLoyaltyHighlights,
+                KissCallout,
                 KissNewsletterCta,
                 CallToAction,
                 Content,
