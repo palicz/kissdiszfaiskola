@@ -313,22 +313,7 @@ export const seed = async ({
             },
           },
         ],
-        legalLinks: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Adatkezelési tájékoztató',
-              url: '#',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Általános Szerződési Feltételek',
-              url: '#',
-            },
-          },
-        ],
+        socialLinks: [],
       },
     }),
   ])

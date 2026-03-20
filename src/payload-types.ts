@@ -2313,23 +2313,16 @@ export interface Footer {
    * A lábléc legalján megjelenő rövid mondat (opcionális).
    */
   tagline?: string | null;
-  legalLinks?:
+  /**
+   * Legfeljebb két link (pl. Facebook, Instagram). Csak akkor jelenik meg a láblécben, ha az URL meg van adva.
+   */
+  socialLinks?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin';
+        /**
+         * Teljes cím, pl. https://www.facebook.com/...
+         */
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -2391,18 +2384,11 @@ export interface FooterSelect<T extends boolean = true> {
   email?: T;
   copyrightLine?: T;
   tagline?: T;
-  legalLinks?:
+  socialLinks?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        platform?: T;
+        url?: T;
         id?: T;
       };
   navItems?:
