@@ -16,6 +16,13 @@ export const contact: (args: ContactArgs) => RequiredDataFromCollectionSlug<'pag
     },
     layout: [
       {
+        blockType: 'kissContactDetails',
+        title: 'Elérhetőség',
+        addressLabel: 'Cím',
+        mapHeading: 'Térkép',
+        images: [],
+      },
+      {
         blockType: 'formBlock',
         enableIntro: true,
         form: contactForm,
