@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-primary": "#ffffff",
+              "surface-variant": "#e3e2e0",
+              "on-secondary-fixed-variant": "#374b43",
+              "error": "#ba1a1a",
+              "surface-container-low": "#f4f3f1",
+              "background": "#faf9f6",
+              "on-secondary": "#ffffff",
+              "surface-tint": "#336760",
+              "primary-fixed": "#b7ede4",
+              "secondary-container": "#cee5da",
+              "secondary": "#4e635a",
+              "on-secondary-fixed": "#0b1f18",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed": "#ffdbd1",
+              "outline": "#707977",
+              "primary-fixed-dim": "#9bd1c8",
+              "on-tertiary-fixed": "#370d03",
+              "on-tertiary-container": "#d98f7a",
+              "inverse-on-surface": "#f2f1ee",
+              "surface-container-high": "#e9e8e5",
+              "secondary-fixed": "#d1e8dd",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed-variant": "#184f48",
+              "on-primary-container": "#77aca3",
+              "surface-dim": "#dbdad7",
+              "tertiary-fixed-dim": "#ffb5a0",
+              "outline-variant": "#bfc8c6",
+              "inverse-surface": "#2f312f",
+              "tertiary": "#411507",
+              "tertiary-container": "#5d291a",
+              "on-error": "#ffffff",
+              "on-primary-fixed": "#00201d",
+              "on-secondary-container": "#52675e",
+              "surface-bright": "#faf9f6",
+              "surface-container-highest": "#e3e2e0",
+              "primary": "#002824",
+              "on-tertiary-fixed-variant": "#6e3727",
+              "surface": "#faf9f6",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#9bd1c8",
+              "surface-container": "#efeeeb",
+              "on-surface-variant": "#404947",
+              "on-surface": "#1a1c1a",
+              "secondary-fixed-dim": "#b5ccc1",
+              "on-background": "#1a1c1a",
+              "primary-container": "#01403a"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+      }
+      .asymmetric-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+      }
+      .ultra-thin-border {
+        border-width: 0.5px;
+      }
+      .editorial-spacing {
+        letter-spacing: -0.01em;
+      }
+      .hero-text-overlay {
+        mix-blend-mode: normal;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Updated TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-stone-50/90 dark:bg-emerald-950/90 backdrop-blur-md border-b border-emerald-900/10 h-24 flex items-center px-12 transition-all duration-300">
+<div class="flex items-end gap-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex-shrink-0 mb-[-4px]">
+<span class="font-headline italic text-3xl tracking-tighter text-emerald-900 dark:text-emerald-100 block leading-none">Kiss Díszfaiskola</span>
+</div>
+<div class="hidden lg:flex items-center gap-10 mb-[-2px]">
+<a class="font-headline text-lg tracking-tight text-emerald-900 dark:text-emerald-200 border-b border-emerald-900/40 pb-1" href="#">Főoldal</a>
+<a class="font-headline text-lg tracking-tight text-emerald-800/60 dark:text-emerald-200/50 hover:text-emerald-900 transition-colors" href="#">Rólunk</a>
+<a class="font-headline text-lg tracking-tight text-emerald-800/60 dark:text-emerald-200/50 hover:text-emerald-900 transition-colors" href="#">Katalógus</a>
+<a class="font-headline text-lg tracking-tight text-emerald-800/60 dark:text-emerald-200/50 hover:text-emerald-900 transition-colors" href="#">Galéria</a>
+<a class="font-headline text-lg tracking-tight text-emerald-800/60 dark:text-emerald-200/50 hover:text-emerald-900 transition-colors" href="#">Kapcsolat</a>
+</div>
+<div class="ml-auto flex items-center gap-8">
+<div class="hidden xl:flex items-center border-b border-emerald-900/20 py-1">
+<span class="material-symbols-outlined text-emerald-900/60 text-lg mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 text-[10px] tracking-[0.2em] font-label text-emerald-900/70 w-32 placeholder:text-emerald-900/30" placeholder="KERESÉS..." type="text"/>
+</div>
+<button class="text-emerald-900 hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined font-light" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="">
+<!-- Updated Hero Section -->
+<section class="relative min-h-[95vh] flex items-center bg-stone-50 overflow-hidden pt-24">
+<div class="max-w-screen-2xl mx-auto w-full px-12 grid grid-cols-12 gap-12 relative z-10">
+<div class="col-span-12 lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
+<div class="max-w-2xl relative">
+<span class="font-label text-[10px] tracking-[0.4em] text-emerald-800/60 uppercase mb-8 block font-medium">ESTABLISHED 1994 • NAGYKÁLLÓ</span>
+<h1 class="font-headline text-6xl md:text-8xl lg:text-9xl text-primary leading-[0.9] tracking-tighter mb-10 editorial-spacing">
+<span class="block">Üdvözöljük a</span>
+<span class="italic font-light block ml-4 md:ml-12 text-emerald-900/90">Kiss Díszfaiskolában</span>
+</h1>
+<p class="text-on-surface-variant/80 text-xl font-light mb-12 max-w-lg leading-relaxed border-l border-emerald-900/20 pl-8">
+                            Kurátori gondossággal nevelt díszfák és különleges botanikai ritkaságok. Egy hely, ahol a szakértelem mélyebb gyökeret eresztett.
+                        </p>
+<div class="flex flex-wrap gap-8 items-center">
+<a class="group relative px-10 py-5 bg-primary text-on-primary transition-all duration-300" href="#">
+<span class="relative z-10 font-label text-xs tracking-[0.2em] uppercase font-semibold">Növénykínálatunk</span>
+<div class="absolute inset-0 border border-primary scale-100 group-hover:scale-105 transition-transform duration-300 opacity-0 group-hover:opacity-100 translate-x-1 translate-y-1"></div>
+</a>
+<a class="font-label text-xs tracking-[0.2em] uppercase font-semibold text-primary border-b border-primary/20 pb-2 hover:border-primary transition-colors" href="#">
+                                Kerttervezési tanácsadás
+                            </a>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 order-1 lg:order-2">
+<div class="relative aspect-[4/5] w-full lg:translate-y-12">
+<img alt="Botanical detail" class="w-full h-full object-cover shadow-2xl grayscale-[20%] hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDghacF0JjLwWg9b4fOcs8nHprsbsbJFv5iay2idBTcqB140Y7veIVImQTc6ful11gKMuVc093tbyWZCXvOT7kkJjOIDXHtZRb9tXvFoRBZriIW5mpsoxL4EXZ71tmXRfsudh4CU4sj_Rp3a6fgBbR_Ted12K9Y1j6YBY3um-93HbL0TfIcF4YdCtdnAdqb-uOmtV_QNlv1PZa35ZqlAnjBD7i0NFkrYZL7HBaNmZvzxqTVUAc_LzifRpookxxeWjrs_RuEPOputDQ"/>
+<div class="absolute -bottom-8 -left-8 md:-left-16 bg-stone-100 p-8 ultra-thin-border border-stone-200 hidden md:block">
+<p class="font-headline italic text-4xl text-emerald-900 leading-none mb-2">Acer palmatum</p>
+<p class="text-[10px] tracking-[0.2em] font-label text-emerald-800/40 uppercase">Szezonális különlegesség</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Aesthetic Background Elements -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-stone-100/50 -z-0"></div>
+<div class="absolute top-[20%] left-[5%] text-[20rem] font-headline text-stone-200/20 leading-none select-none -z-0 opacity-40">K</div>
+</section>
+<!-- Specimen Grid (Asymmetric Layout) -->
+<section class="py-32 px-12 bg-surface">
+<div class="max-w-screen-2xl mx-auto">
+<div class="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-12">
+<div class="max-w-2xl">
+<span class="text-emerald-800/40 font-label uppercase tracking-[0.4em] text-[10px] mb-6 block font-bold">KIVÁLÓSÁG A KERTBEN</span>
+<h2 class="font-headline text-5xl md:text-6xl text-primary leading-tight editorial-spacing">Válogatás az aktuális <br/> <span class="italic font-light">botanikai kínálatunkból</span></h2>
+</div>
+<a class="text-primary font-label text-xs tracking-[0.2em] uppercase border-b border-primary/20 pb-2 hover:border-primary transition-colors inline-flex items-center gap-3" href="#">
+                        Összes megtekintése
+                        <span class="material-symbols-outlined text-sm">north_east</span>
+</a>
+</div>
+<div class="asymmetric-grid">
+<!-- Large Feature -->
+<div class="col-span-12 md:col-span-7 aspect-[4/5] md:aspect-auto h-full overflow-hidden bg-stone-100 relative group">
+<img alt="Ornamental Shrub" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDghacF0JjLwWg9b4fOcs8nHprsbsbJFv5iay2idBTcqB140Y7veIVImQTc6ful11gKMuVc093tbyWZCXvOT7kkJjOIDXHtZRb9tXvFoRBZriIW5mpsoxL4EXZ71tmXRfsudh4CU4sj_Rp3a6fgBbR_Ted12K9Y1j6YBY3um-93HbL0TfIcF4YdCtdnAdqb-uOmtV_QNlv1PZa35ZqlAnjBD7i0NFkrYZL7HBaNmZvzxqTVUAc_LzifRpookxxeWjrs_RuEPOputDQ"/>
+<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+<div class="absolute bottom-0 left-0 p-12 w-full">
+<span class="inline-block bg-white/90 backdrop-blur-sm text-primary px-6 py-2 text-[10px] font-label tracking-[0.2em] uppercase mb-6">SZEZONÁLIS KEDVENC</span>
+<h3 class="text-white font-headline text-4xl leading-tight">Japán juhar <br/>különlegességek</h3>
+</div>
+</div>
+<!-- Side Stacks -->
+<div class="col-span-12 md:col-span-5 grid grid-rows-2 gap-6">
+<div class="aspect-[16/9] overflow-hidden bg-stone-100 group relative">
+<img alt="Evergreens" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI_Ieqj89Mx50itAaM90SvKCBzWQ7rR7r49WLfSSnpMeMg-yGlORGNkk5jLmznn-iyNcJPchob6kXaLk8LV0Pul16TBzy0-plUxwvxsYUuzHJmGLIhjWobx28NHGTXScxqhr8a7tYVK4AMzrybzVhOyjnBc9QKplRNNdfkfuiFwcibb8kGmgQiyT7ylPJfeKTc8lwRkLwY4V7lwFKddZ_9q29AbrrqqdWZhZXN3B2ZFut__ZDPulXs3RXbx2c_jH3xBBV2oDMrXT4"/>
+</div>
+<div class="bg-stone-50 p-12 flex flex-col justify-center border border-stone-100">
+<h3 class="font-headline text-3xl text-primary mb-6">Örökzöld sövények</h3>
+<p class="text-on-surface-variant/70 text-sm mb-8 leading-relaxed font-light">Privát szféra és természetes keret kertje számára. Kiváló minőségű tuja és babérmeggy fajták, melyek átírják a kert definícióját.</p>
+<a class="text-emerald-900 font-label text-[10px] tracking-[0.2em] uppercase font-bold border-b border-emerald-900/20 w-fit pb-1 hover:border-emerald-900 transition-colors" href="#">RÉSZLETEK</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Opening Hours & Refined Info -->
+<section class="py-32 bg-stone-50">
+<div class="max-w-screen-2xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+<div class="relative">
+<img alt="Nursery view" class="relative z-10 w-full aspect-square object-cover grayscale-[10%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLp-II5sf4K4RUK9mJrI6VBXsFOEXTyVBWUX--wsj6OBWxtoDV8NhX9KY5y0Utv1AwZqHToO22kqVcm3JvECkrMO9o_ieFRnxafLNLMWYnBFA8r1_LQMhaoS7c12w2tZfDCVZpWUUt933_GM98BrHWOrkUdoL1j8NexDq4-9n_rP8-kaLPUl3Ovat01ZB4fekDvlYbLj8o9Lk9afFfv4fzEcjTNIkDML5XUa48xPcltDJyeoae-S00XerfbGpeX3gQY8KFuZleUmE"/>
+<div class="absolute -bottom-12 -right-12 bg-primary p-12 z-20 hidden md:block">
+<span class="text-on-primary font-headline text-5xl italic font-light">30+</span>
+<p class="text-on-primary/60 text-[10px] font-label uppercase tracking-[0.3em] mt-4">Év szakmai tapasztalat</p>
+</div>
+</div>
+<div>
+<h2 class="font-headline text-5xl text-primary mb-16 italic font-light editorial-spacing">Látogasson el hozzánk</h2>
+<div class="space-y-12">
+<div>
+<h3 class="font-label text-[10px] uppercase tracking-[0.4em] text-emerald-800/40 mb-8 font-bold">NYITVATARTÁS</h3>
+<div class="space-y-6">
+<div class="flex justify-between items-center border-b border-stone-200 pb-4">
+<span class="font-headline text-lg text-primary">Hétfő – Péntek</span>
+<span class="font-body text-sm text-on-surface-variant font-light tracking-widest">08:00 – 17:00</span>
+</div>
+<div class="flex justify-between items-center border-b border-stone-200 pb-4">
+<span class="font-headline text-lg text-primary">Szombat</span>
+<span class="font-body text-sm text-on-surface-variant font-light tracking-widest">08:00 – 12:00</span>
+</div>
+<div class="flex justify-between items-center pb-4 opacity-40">
+<span class="font-headline text-lg text-primary">Vasárnap</span>
+<span class="font-body text-sm text-on-surface-variant font-light tracking-widest">Zárva</span>
+</div>
+</div>
+</div>
+<div class="pt-8">
+<h3 class="font-label text-[10px] uppercase tracking-[0.4em] text-emerald-800/40 mb-8 font-bold">KAPCSOLAT</h3>
+<div class="flex items-start gap-6">
+<span class="material-symbols-outlined text-emerald-900 font-extralight text-3xl">location_on</span>
+<div>
+<p class="font-headline text-xl text-primary mb-1">Nagykálló</p>
+<p class="text-on-surface-variant/70 text-sm font-light leading-relaxed">4320 Nagykálló, Korányi Frigyes út 81.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="py-32 bg-primary relative overflow-hidden">
+<div class="max-w-4xl mx-auto px-12 text-center relative z-10">
+<h2 class="font-headline text-5xl text-on-primary mb-8 editorial-spacing">Szakértő tanácsadás kertjéhez</h2>
+<p class="text-on-primary/60 mb-16 text-xl font-light leading-relaxed">Nem biztos benne, melyik növény illik legjobban otthonába? Szakértőink örömmel segítenek a választásban és a gondozási tanácsokban.</p>
+<div class="flex flex-col sm:flex-row gap-0 justify-center">
+<input class="bg-primary-container border-b border-primary-fixed/20 border-t-0 border-l-0 border-r-0 text-on-primary placeholder:text-on-primary/20 px-8 py-5 focus:ring-0 focus:border-on-primary/40 min-w-[350px] transition-all" placeholder="AZ ÖN E-MAIL CÍME" type="email"/>
+<button class="bg-white text-primary px-12 py-5 font-label text-xs tracking-[0.2em] uppercase font-bold hover:bg-stone-100 transition-colors">Feliratkozás</button>
+</div>
+</div>
+<!-- Decorative Icon -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
+<span class="material-symbols-outlined text-[600px] leading-none">eco</span>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-100 w-full py-24 px-12 mt-auto border-t border-stone-200">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-20 max-w-screen-2xl mx-auto">
+<div class="col-span-1">
+<span class="font-headline italic text-2xl text-emerald-950 mb-8 block">Kiss Díszfaiskola</span>
+<p class="text-stone-600/80 text-sm font-light leading-relaxed mb-8">
+                    Három évtizede elkötelezetten a minőség mellett. Kertészeti alapanyagok és a természet iránti alázat, közvetlenül a termelőtől.
+                </p>
+</div>
+<div>
+<h4 class="text-emerald-950 font-label text-[10px] font-bold tracking-[0.3em] mb-10 uppercase">Navigáció</h4>
+<ul class="space-y-4">
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Rólunk</a></li>
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Növénykatalógus</a></li>
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Galéria</a></li>
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Kapcsolat</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-emerald-950 font-label text-[10px] font-bold tracking-[0.3em] mb-10 uppercase">Helyszín</h4>
+<ul class="space-y-5">
+<li class="text-stone-600/80 text-sm font-light flex items-start gap-4 leading-relaxed">
+<span class="material-symbols-outlined text-lg mt-1">pin_drop</span>
+                        4320 Nagykálló, Korányi Frigyes út 81.
+                    </li>
+<li class="text-stone-600/80 text-sm font-light flex items-center gap-4">
+<span class="material-symbols-outlined text-lg">phone</span>
+                        +36 (42) 263 123
+                    </li>
+<li class="text-stone-600/80 text-sm font-light flex items-center gap-4">
+<span class="material-symbols-outlined text-lg">mail</span>
+                        info@kissdiszfaiskola.hu
+                    </li>
+</ul>
+</div>
+<div>
+<h4 class="text-emerald-950 font-label text-[10px] font-bold tracking-[0.3em] mb-10 uppercase">Jogi Információk</h4>
+<ul class="space-y-4">
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Adatkezelési tájékoztató</a></li>
+<li><a class="text-stone-600/80 text-sm font-light hover:text-emerald-950 transition-colors underline decoration-stone-300 underline-offset-8" href="#">Általános Szerződési Feltételek</a></li>
+<li class="text-stone-400 text-[10px] pt-8 tracking-widest uppercase">© 2024 Kiss Díszfaiskola</li>
+</ul>
+</div>
+</div>
+<div class="max-w-screen-2xl mx-auto mt-24 pt-12 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-8">
+<span class="text-stone-400 text-[10px] tracking-[0.3em] uppercase">EVERY SPECIMEN TELLS A STORY</span>
+<div class="flex gap-10">
+<a class="text-stone-400 hover:text-primary transition-all duration-300" href="#"><span class="material-symbols-outlined text-2xl font-extralight">social_leaderboard</span></a>
+<a class="text-stone-400 hover:text-primary transition-all duration-300" href="#"><span class="material-symbols-outlined text-2xl font-extralight">camera</span></a>
+</div>
+</div>
+</footer>
+</body></html>
