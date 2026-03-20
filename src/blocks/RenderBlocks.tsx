@@ -6,6 +6,7 @@ import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
+import { KissContactDetailsBlock } from '@/blocks/KissContactDetails/Component'
 import { KissGalleryBlock } from '@/blocks/KissGallery/Component'
 import { KissNewsletterBlock } from '@/blocks/KissNewsletterCta/Component'
 import { KissOurStoryBlock } from '@/blocks/KissOurStory/Component'
@@ -23,6 +24,7 @@ const blockComponents = {
   kissOurStory: KissOurStoryBlock,
   kissPlantCatalog: KissPlantCatalogBlock,
   kissGallery: KissGalleryBlock,
+  kissContactDetails: KissContactDetailsBlock,
   kissSpecimen: KissSpecimenBlock,
   kissVisit: KissVisitBlock,
   mediaBlock: MediaBlock,

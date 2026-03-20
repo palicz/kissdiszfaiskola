@@ -224,6 +224,7 @@ export interface Page {
   layout: (
     | KissSpecimenBlock
     | KissVisitBlock
+    | KissContactDetailsBlock
     | KissOurStoryBlock
     | KissPlantCatalogBlock
     | KissGalleryBlock
@@ -557,6 +558,45 @@ export interface KissVisitBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'kissVisit';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissContactDetailsBlock".
+ */
+export interface KissContactDetailsBlock {
+  title: string;
+  /**
+   * Opcionális rövid szöveg a cím alatt.
+   */
+  intro?: string | null;
+  /**
+   * Pl. +36 30 123 4567 — kattintható hívás link lesz mobilon.
+   */
+  phone?: string | null;
+  email?: string | null;
+  /**
+   * Pl. „Telephely” vagy üresen hagyható.
+   */
+  addressLabel?: string | null;
+  addressLines?: string | null;
+  /**
+   * Opcionális fotók (pl. bejárat, tábla).
+   */
+  images?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  mapHeading?: string | null;
+  /**
+   * Google Térkép → Megosztás → Térkép beágyazása → másold ki csak az iframe „src” címét (https://www.google.com/maps/embed?...).
+   */
+  mapEmbedUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissContactDetails';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1360,6 +1400,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         kissSpecimen?: T | KissSpecimenBlockSelect<T>;
         kissVisit?: T | KissVisitBlockSelect<T>;
+        kissContactDetails?: T | KissContactDetailsBlockSelect<T>;
         kissOurStory?: T | KissOurStoryBlockSelect<T>;
         kissPlantCatalog?: T | KissPlantCatalogBlockSelect<T>;
         kissGallery?: T | KissGalleryBlockSelect<T>;
@@ -1442,6 +1483,29 @@ export interface KissVisitBlockSelect<T extends boolean = true> {
   contactHeading?: T;
   addressTitle?: T;
   addressLines?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissContactDetailsBlock_select".
+ */
+export interface KissContactDetailsBlockSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  phone?: T;
+  email?: T;
+  addressLabel?: T;
+  addressLines?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  mapHeading?: T;
+  mapEmbedUrl?: T;
   id?: T;
   blockName?: T;
 }
