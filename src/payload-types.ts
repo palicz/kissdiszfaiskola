@@ -570,9 +570,21 @@ export interface KissContactDetailsBlock {
    */
   intro?: string | null;
   /**
-   * Pl. +36 30 123 4567 — kattintható hívás link lesz mobilon.
+   * Több szám is megadható (pl. mobil + üzlet). Opcionális címke: „Mobil”, „Fő vonal”.
    */
-  phone?: string | null;
+  phones?:
+    | {
+        /**
+         * Pl. „Mobil” — üresen egyetlen „Telefon” blokkban jelenik meg.
+         */
+        label?: string | null;
+        /**
+         * Pl. +36 30 123 4567 — kattintható hívás link.
+         */
+        number: string;
+        id?: string | null;
+      }[]
+    | null;
   email?: string | null;
   /**
    * Pl. „Telephely” vagy üresen hagyható.
@@ -1493,7 +1505,13 @@ export interface KissVisitBlockSelect<T extends boolean = true> {
 export interface KissContactDetailsBlockSelect<T extends boolean = true> {
   title?: T;
   intro?: T;
-  phone?: T;
+  phones?:
+    | T
+    | {
+        label?: T;
+        number?: T;
+        id?: T;
+      };
   email?: T;
   addressLabel?: T;
   addressLines?: T;

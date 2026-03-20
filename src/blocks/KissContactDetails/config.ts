@@ -25,12 +25,34 @@ export const KissContactDetails: Block = {
       },
     },
     {
-      name: 'phone',
-      type: 'text',
-      label: 'Telefon',
+      name: 'phones',
+      type: 'array',
+      label: 'Telefonszámok',
+      labels: { singular: 'szám', plural: 'számok' },
       admin: {
-        description: 'Pl. +36 30 123 4567 — kattintható hívás link lesz mobilon.',
+        description:
+          'Több szám is megadható (pl. mobil + üzlet). Opcionális címke: „Mobil”, „Fő vonal”.',
+        initCollapsed: false,
       },
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          label: 'Címke',
+          admin: {
+            description: 'Pl. „Mobil” — üresen egyetlen „Telefon” blokkban jelenik meg.',
+          },
+        },
+        {
+          name: 'number',
+          type: 'text',
+          label: 'Szám',
+          required: true,
+          admin: {
+            description: 'Pl. +36 30 123 4567 — kattintható hívás link.',
+          },
+        },
+      ],
     },
     {
       name: 'email',

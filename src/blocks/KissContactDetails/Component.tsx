@@ -31,7 +31,7 @@ export const KissContactDetailsBlock: React.FC<
     disableInnerContainer: _ignored,
     title,
     intro,
-    phone,
+    phones,
     email,
     addressLabel,
     addressLines,
@@ -42,9 +42,10 @@ export const KissContactDetailsBlock: React.FC<
 
   const mapSrc = getSafeMapEmbedSrc(mapEmbedUrl ?? undefined)
   const imageItems = images?.filter((row) => row?.image && typeof row.image === 'object') ?? []
+  const phoneRows = phones?.filter((row) => row?.number?.trim()) ?? []
 
   const hasContact =
-    Boolean(phone?.trim()) ||
+    phoneRows.length > 0 ||
     Boolean(email?.trim()) ||
     Boolean(addressLines?.trim()) ||
     Boolean(addressLabel?.trim())
@@ -70,21 +71,36 @@ export const KissContactDetailsBlock: React.FC<
           <div className="min-w-0 space-y-8">
             {hasContact ? (
               <ul className="space-y-6">
-                {phone?.trim() ? (
+                {phoneRows.length > 0 ? (
                   <li className="flex gap-4">
                     <span className="mt-0.5 shrink-0 text-b-primary" aria-hidden>
                       <Phone className="size-5" strokeWidth={1.75} />
                     </span>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <p className="font-sans text-xs font-medium uppercase tracking-widest text-b-on-surface-variant">
                         Telefon
                       </p>
-                      <a
-                        className="mt-1 inline-block font-sans text-lg text-b-primary underline decoration-b-primary/30 underline-offset-4 transition hover:decoration-b-primary"
-                        href={`tel:${phone.replace(/\s/g, '')}`}
-                      >
-                        {phone.trim()}
-                      </a>
+                      <ul className="mt-2 space-y-3">
+                        {phoneRows.map((row, i) => {
+                          const n = row.number!.trim()
+                          const telHref = `tel:${n.replace(/\s/g, '')}`
+                          return (
+                            <li key={row.id ?? i}>
+                              {row.label?.trim() ? (
+                                <p className="font-sans text-xs text-b-on-surface-variant">
+                                  {row.label.trim()}
+                                </p>
+                              ) : null}
+                              <a
+                                className="inline-block font-sans text-lg text-b-primary underline decoration-b-primary/30 underline-offset-4 transition hover:decoration-b-primary"
+                                href={telHref}
+                              >
+                                {n}
+                              </a>
+                            </li>
+                          )
+                        })}
+                      </ul>
                     </div>
                   </li>
                 ) : null}
