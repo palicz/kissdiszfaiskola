@@ -258,7 +258,10 @@ export const KissPlantCatalogBlock: React.FC<
   const { disableInnerContainer: _ignored, ...block } = props
   const { title, eyebrow, introImage, introBody, introNote, sections: sectionList } = block
 
-  const sections = sectionList?.filter((s) => s?.anchorId && s?.title) ?? []
+  const sections = useMemo(
+    () => sectionList?.filter((s) => s?.anchorId && s?.title) ?? [],
+    [sectionList],
+  )
   const introImg = introImage && typeof introImage === 'object' ? introImage : null
 
   const catalogRootRef = useRef<HTMLDivElement | null>(null)

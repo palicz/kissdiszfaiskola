@@ -44,8 +44,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        {/* Material Symbols nincs next/font/google alatt; App Router root layout = globális betöltés */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- external icon font; display per Next recommendation */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&display=optional"
           rel="stylesheet"
         />
       </head>
