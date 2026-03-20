@@ -46,18 +46,37 @@ export const Footer: GlobalConfig = {
       },
     },
     {
-      name: 'legalLinks',
+      name: 'socialLinks',
       type: 'array',
-      label: 'Jogi linkek',
-      fields: [
-        link({
-          appearances: false,
-        }),
-      ],
-      maxRows: 6,
+      label: 'Közösségi profilok',
+      maxRows: 2,
       admin: {
+        description:
+          'Legfeljebb két link (pl. Facebook, Instagram). Csak akkor jelenik meg a láblécben, ha az URL meg van adva.',
         initCollapsed: true,
       },
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          label: 'Platform',
+          required: true,
+          options: [
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'YouTube', value: 'youtube' },
+            { label: 'LinkedIn', value: 'linkedin' },
+          ],
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'URL',
+          admin: {
+            description: 'Teljes cím, pl. https://www.facebook.com/...',
+          },
+        },
+      ],
     },
     {
       name: 'navItems',
