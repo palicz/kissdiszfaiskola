@@ -16,6 +16,7 @@ import { KissGallery } from '../../blocks/KissGallery/config'
 import { KissPlantCatalog } from '../../blocks/KissPlantCatalog/config'
 import { KissSpecimenShowcase } from '../../blocks/KissSpecimenShowcase/config'
 import { KissVisitContact } from '../../blocks/KissVisitContact/config'
+import { KissBlogPosts } from '../../blocks/KissBlogPosts/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
@@ -99,6 +100,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 KissLoyaltyHighlights,
                 KissCallout,
                 KissNewsletterCta,
+                KissBlogPosts,
                 CallToAction,
                 Content,
                 MediaBlock,

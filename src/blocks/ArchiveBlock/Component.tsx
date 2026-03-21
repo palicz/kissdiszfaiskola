@@ -1,11 +1,13 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import type { ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import RichText from '@/components/RichText'
 
+import type { CardPostData } from '@/components/Card'
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { POST_CARD_LIST_DEPTH, postCardListSelect } from '@/utilities/postCardQuery'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -16,7 +18,7 @@ export const ArchiveBlock: React.FC<
 
   const limit = limitFromProps || 3
 
-  let posts: Post[] = []
+  let posts: CardPostData[] = []
 
   if (populateBy === 'collection') {
     const payload = await getPayload({ config: configPromise })
@@ -28,8 +30,10 @@ export const ArchiveBlock: React.FC<
 
     const fetchedPosts = await payload.find({
       collection: 'posts',
-      depth: 1,
+      depth: POST_CARD_LIST_DEPTH,
       limit,
+      overrideAccess: false,
+      select: postCardListSelect,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
             where: {
@@ -41,12 +45,12 @@ export const ArchiveBlock: React.FC<
         : {}),
     })
 
-    posts = fetchedPosts.docs
+    posts = fetchedPosts.docs as CardPostData[]
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedPosts = selectedDocs.map((post) => {
         if (typeof post.value === 'object') return post.value
-      }) as Post[]
+      }) as CardPostData[]
 
       posts = filteredSelectedPosts
     }

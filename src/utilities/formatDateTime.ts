@@ -1,3 +1,12 @@
+export const formatPostDateHu = (timestamp: string): string => {
+  const date = timestamp ? new Date(timestamp) : new Date()
+  return new Intl.DateTimeFormat('hu-HU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date)
+}
+
 export const formatDateTime = (timestamp: string): string => {
   const now = new Date()
   let date = now

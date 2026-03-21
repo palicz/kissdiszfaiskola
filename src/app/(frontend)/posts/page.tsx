@@ -1,60 +1,43 @@
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
+import { BlogPostsIndex } from '@/components/BlogPostsIndex'
 import configPromise from '@payload-config'
+import { POST_CARD_LIST_DEPTH, postCardListSelect } from '@/utilities/postCardQuery'
 import { getPayload } from 'payload'
 import React from 'react'
+
 export const dynamic = 'force-static'
 export const revalidate = 600
+
+const POSTS_PER_PAGE = 12
 
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
     collection: 'posts',
-    depth: 1,
-    limit: 12,
+    depth: POST_CARD_LIST_DEPTH,
+    limit: POSTS_PER_PAGE,
     overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-      categories: true,
-      meta: true,
-    },
+    sort: '-publishedAt',
+    select: postCardListSelect,
   })
 
   return (
-    <div className="pt-24 pb-24">
-      <div className="container mb-16">
-        <div className="prose max-w-none">
-          <h1>Posts</h1>
-        </div>
-      </div>
-
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
-
-      <CollectionArchive posts={posts.docs} />
-
-      <div className="container">
-        {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
-    </div>
+    <BlogPostsIndex
+      currentPage={posts.page ?? 1}
+      limit={POSTS_PER_PAGE}
+      posts={posts.docs}
+      totalDocs={posts.totalDocs}
+      totalPages={posts.totalPages ?? 1}
+    />
   )
 }
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: 'Blog | Kiss Díszfaiskola',
+    description:
+      'Hírek és kertészeti tanácsok a Kiss Díszfaiskolától — díszfák, növények és szakmai tippek Nagykállóról.',
   }
 }
