@@ -8,7 +8,9 @@ import React from 'react'
 
 import type { Props as MediaProps } from '../types'
 
+import type { Media as MediaType } from '@/payload-types'
 import { cssVariables } from '@/cssVariables'
+import { mediaObjectPositionFromResource } from '@/utilities/mediaFocalPoint'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 const { breakpoints } = cssVariables
@@ -51,6 +53,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     fill,
     pictureClassName,
     imgClassName,
+    onLoad,
     priority,
     resource,
     size: sizeFromProps,
@@ -77,6 +80,11 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
+  const objectPositionFromFocal =
+    resource && typeof resource === 'object'
+      ? mediaObjectPositionFromResource(resource as MediaType)
+      : undefined
+
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
     ? sizeFromProps
@@ -96,8 +104,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         priority={priority}
         quality={100}
         loading={loading}
+        onLoad={onLoad}
         sizes={sizes}
         src={src}
+        style={objectPositionFromFocal ? { objectPosition: objectPositionFromFocal } : undefined}
         width={!fill ? width : undefined}
       />
     </picture>

@@ -51,7 +51,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pt-16 pb-16">
+    <article className="bg-b-surface pb-20 pt-0">
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
@@ -59,14 +59,24 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <PostHero post={post} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+      <div className="flex flex-col items-center gap-4 px-4 pt-8 md:px-6 md:pt-16">
+        <div className="mx-auto w-full max-w-[45rem]">
+          <RichText
+            className="payload-richtext prose mx-auto max-w-none font-sans text-b-on-surface-variant prose-headings:font-headline prose-headings:tracking-tight prose-headings:text-b-primary prose-h2:mt-12 prose-h2:mb-4 prose-h3:mt-10 prose-p:leading-relaxed prose-a:text-b-primary-container prose-a:no-underline hover:prose-a:underline md:prose-lg"
+            data={post.content}
+            enableGutter={false}
+            enableProse={false}
+          />
           {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
+            <div className="mt-16 border-t border-b-outline-variant/15 pt-16">
+              <h2 className="mb-10 font-headline text-2xl text-b-primary editorial-spacing md:text-3xl">
+                Kapcsolódó bejegyzések
+              </h2>
+              <RelatedPosts
+                className="max-w-none !px-0"
+                docs={post.relatedPosts.filter((p) => typeof p === 'object')}
+              />
+            </div>
           )}
         </div>
       </div>
@@ -90,6 +100,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 
   const result = await payload.find({
     collection: 'posts',
+    depth: 2,
     draft,
     limit: 1,
     overrideAccess: draft,

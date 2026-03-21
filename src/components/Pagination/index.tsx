@@ -12,6 +12,11 @@ import { cn } from '@/utilities/ui'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
+function postsListingPath(pageNum: number): string {
+  if (pageNum <= 1) return '/posts'
+  return `/posts/page/${pageNum}`
+}
+
 export const Pagination: React.FC<{
   className?: string
   page: number
@@ -26,15 +31,17 @@ export const Pagination: React.FC<{
   const hasExtraPrevPages = page - 1 > 1
   const hasExtraNextPages = page + 1 < totalPages
 
+  const go = (p: number) => router.push(postsListingPath(p))
+
   return (
     <div className={cn('my-12', className)}>
-      <PaginationComponent>
+      <PaginationComponent aria-label="Blog oldalak">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
               disabled={!hasPrevPage}
               onClick={() => {
-                router.push(`/posts/page/${page - 1}`)
+                go(page - 1)
               }}
             />
           </PaginationItem>
@@ -49,7 +56,7 @@ export const Pagination: React.FC<{
             <PaginationItem>
               <PaginationLink
                 onClick={() => {
-                  router.push(`/posts/page/${page - 1}`)
+                  go(page - 1)
                 }}
               >
                 {page - 1}
@@ -61,7 +68,7 @@ export const Pagination: React.FC<{
             <PaginationLink
               isActive
               onClick={() => {
-                router.push(`/posts/page/${page}`)
+                go(page)
               }}
             >
               {page}
@@ -72,7 +79,7 @@ export const Pagination: React.FC<{
             <PaginationItem>
               <PaginationLink
                 onClick={() => {
-                  router.push(`/posts/page/${page + 1}`)
+                  go(page + 1)
                 }}
               >
                 {page + 1}
@@ -90,7 +97,7 @@ export const Pagination: React.FC<{
             <PaginationNext
               disabled={!hasNextPage}
               onClick={() => {
-                router.push(`/posts/page/${page + 1}`)
+                go(page + 1)
               }}
             />
           </PaginationItem>

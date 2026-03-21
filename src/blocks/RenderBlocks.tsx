@@ -16,10 +16,12 @@ import { KissOurStoryBlock } from '@/blocks/KissOurStory/Component'
 import { KissPlantCatalogBlock } from '@/blocks/KissPlantCatalog/Component'
 import { KissSpecimenBlock } from '@/blocks/KissSpecimenShowcase/Component'
 import { KissVisitBlock } from '@/blocks/KissVisitContact/Component'
+import { KissBlogPostsBlock } from '@/blocks/KissBlogPosts/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
+  kissBlogPosts: KissBlogPostsBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,

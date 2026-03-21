@@ -232,6 +232,7 @@ export interface Page {
     | KissLoyaltyHighlightsBlock
     | KissCalloutBlock
     | KissNewsletterBlock
+    | KissBlogPostsBlock
     | CallToActionBlock
     | ContentBlock
     | MediaBlock
@@ -826,6 +827,48 @@ export interface KissNewsletterBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'kissNewsletter';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissBlogPostsBlock".
+ */
+export interface KissBlogPostsBlock {
+  /**
+   * Rövid, kis betűs sor a cím felett (pl. „Blog”).
+   */
+  eyebrow?: string | null;
+  /**
+   * Ha üres, csak a bevezető és a bejegyzések jelennek meg.
+   */
+  heading?: string | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissBlogPosts';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1490,6 +1533,7 @@ export interface PagesSelect<T extends boolean = true> {
         kissLoyaltyHighlights?: T | KissLoyaltyHighlightsBlockSelect<T>;
         kissCallout?: T | KissCalloutBlockSelect<T>;
         kissNewsletter?: T | KissNewsletterBlockSelect<T>;
+        kissBlogPosts?: T | KissBlogPostsBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1732,6 +1776,22 @@ export interface KissNewsletterBlockSelect<T extends boolean = true> {
   emailPlaceholder?: T;
   buttonLabel?: T;
   privacyNote?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissBlogPostsBlock_select".
+ */
+export interface KissBlogPostsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
   id?: T;
   blockName?: T;
 }
@@ -2465,17 +2525,6 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

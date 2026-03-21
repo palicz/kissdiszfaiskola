@@ -1,10 +1,11 @@
-import { formatDateTime } from 'src/utilities/formatDateTime'
-import React from 'react'
+import { formatPostDateHu } from '@/utilities/formatDateTime'
+import React, { Suspense } from 'react'
 
 import type { Post } from '@/payload-types'
 
-import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
+
+import { PostHeroImage, PostHeroImageFallback } from './PostHeroImage'
 
 export const PostHero: React.FC<{
   post: Post
@@ -14,59 +15,79 @@ export const PostHero: React.FC<{
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
+  const hasCategories = Boolean(categories && categories.length > 0)
+
+  const categoryLine = hasCategories
+    ? categories?.map((category, index) => {
+        if (typeof category === 'object' && category !== null) {
+          const categoryTitle = category.title || 'Kategória'
+          const isLast = index === (categories?.length ?? 0) - 1
+          return (
+            <React.Fragment key={category.id ?? index}>
+              {categoryTitle}
+              {!isLast && ', '}
+            </React.Fragment>
+          )
+        }
+        return null
+      })
+    : null
+
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="uppercase text-sm mb-6">
-            {categories?.map((category, index) => {
-              if (typeof category === 'object' && category !== null) {
-                const { title: categoryTitle } = category
+    <div className="relative isolate -mt-16 flex min-h-[min(62vh,30rem)] items-end md:-mt-[10.4rem] md:min-h-[min(80vh,52rem)]">
+      <div className="relative z-10 flex w-full justify-center px-4 pb-8 text-b-on-primary md:px-6 md:pb-14">
+        <div className="w-full max-w-3xl text-left">
+          {hasCategories ? (
+            <div className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-b-on-primary/80 md:mb-5">
+              {categoryLine}
+            </div>
+          ) : null}
 
-                const titleToUse = categoryTitle || 'Untitled category'
+          <h1 className="mb-5 font-headline text-3xl leading-[1.12] tracking-tight md:mb-8 md:text-5xl lg:text-6xl editorial-spacing">
+            {title}
+          </h1>
 
-                const isLast = index === categories.length - 1
-
-                return (
-                  <React.Fragment key={index}>
-                    {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
-                )
-              }
-              return null
-            })}
-          </div>
-
-          <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-            {hasAuthors && (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
-
-                  <p>{formatAuthors(populatedAuthors)}</p>
+          {hasAuthors || publishedAt ? (
+            <div className="flex w-full max-w-2xl flex-col items-start gap-6 border-t border-b-on-primary/25 pt-6 md:flex-row md:gap-14 md:pt-9">
+              {hasAuthors ? (
+                <div className="flex flex-col items-start gap-1.5 text-left">
+                  <p className="font-sans text-xs font-semibold uppercase tracking-wider text-b-on-primary/65">
+                    Szerző
+                  </p>
+                  <p className="font-sans text-sm md:text-base">
+                    {formatAuthors(populatedAuthors)}
+                  </p>
                 </div>
-              </div>
-            )}
-            {publishedAt && (
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
-
-                <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
-              </div>
-            )}
-          </div>
+              ) : null}
+              {publishedAt ? (
+                <div className="flex flex-col items-start gap-1.5 text-left">
+                  <p className="font-sans text-xs font-semibold uppercase tracking-wider text-b-on-primary/65">
+                    Közzétéve
+                  </p>
+                  <time className="font-sans text-sm md:text-base" dateTime={publishedAt}>
+                    {formatPostDateHu(publishedAt)}
+                  </time>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
+      <div className="pointer-events-none absolute inset-0 -z-10 min-h-[min(62vh,30rem)] select-none md:min-h-[min(80vh,52rem)]">
+        {heroImage && typeof heroImage === 'object' ? (
+          <Suspense fallback={<PostHeroImageFallback />}>
+            <PostHeroImage resource={heroImage} />
+          </Suspense>
+        ) : (
+          <>
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-br from-b-primary-container via-b-primary to-b-primary"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-b-primary via-b-primary/55 to-b-primary/20" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgb(255_255_255/0.08),transparent_55%)]" />
+          </>
         )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-linear-to-t from-black to-transparent" />
       </div>
     </div>
   )

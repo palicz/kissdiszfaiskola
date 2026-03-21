@@ -1,14 +1,15 @@
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
+import { BlogPostsIndex } from '@/components/BlogPostsIndex'
 import configPromise from '@payload-config'
+import { POST_CARD_LIST_DEPTH, postCardListSelect } from '@/utilities/postCardQuery'
 import { getPayload } from 'payload'
 import React from 'react'
 import { notFound } from 'next/navigation'
 
 export const revalidate = 600
+
+const POSTS_PER_PAGE = 12
 
 type Args = {
   params: Promise<{
@@ -22,48 +23,38 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const sanitizedPageNumber = Number(pageNumber)
 
-  if (!Number.isInteger(sanitizedPageNumber)) notFound()
+  if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 2) notFound()
 
   const posts = await payload.find({
     collection: 'posts',
-    depth: 1,
-    limit: 12,
+    depth: POST_CARD_LIST_DEPTH,
+    limit: POSTS_PER_PAGE,
     page: sanitizedPageNumber,
     overrideAccess: false,
+    sort: '-publishedAt',
+    select: postCardListSelect,
   })
 
+  if (posts.totalPages && sanitizedPageNumber > posts.totalPages) notFound()
+  if (posts.docs.length === 0) notFound()
+
   return (
-    <div className="pt-24 pb-24">
-      <div className="container mb-16">
-        <div className="prose max-w-none">
-          <h1>Posts</h1>
-        </div>
-      </div>
-
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
-
-      <CollectionArchive posts={posts.docs} />
-
-      <div className="container">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
-    </div>
+    <BlogPostsIndex
+      currentPage={posts.page ?? sanitizedPageNumber}
+      limit={POSTS_PER_PAGE}
+      posts={posts.docs}
+      totalDocs={posts.totalDocs}
+      totalPages={posts.totalPages ?? 1}
+    />
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
   return {
-    title: `Payload Website Template Posts Page ${pageNumber || ''}`,
+    title: `Blog — ${pageNumber}. oldal | Kiss Díszfaiskola`,
+    description:
+      'Hírek és kertészeti tanácsok a Kiss Díszfaiskolától — díszfák, növények és szakmai tippek Nagykállóról.',
   }
 }
 
@@ -74,11 +65,11 @@ export async function generateStaticParams() {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / POSTS_PER_PAGE)
 
   const pages: { pageNumber: string }[] = []
 
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 2; i <= totalPages; i++) {
     pages.push({ pageNumber: String(i) })
   }
 
