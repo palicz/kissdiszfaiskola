@@ -8,11 +8,10 @@ import { CMSLink } from '@/components/Link'
 import { FooterSocialLinks } from './FooterSocialLinks'
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const footerData = (await getCachedGlobal('footer', 1)()) as Footer
 
   const navItems = footerData?.navItems || []
-  const hasSocial =
-    footerData.socialLinks?.some((row) => Boolean(row?.url?.trim())) ?? false
+  const hasSocial = footerData.socialLinks?.some((row) => Boolean(row?.url?.trim())) ?? false
   const hasLeftText =
     Boolean(footerData.tagline?.trim()) || Boolean(footerData.copyrightLine?.trim())
   const showBottomBar = hasLeftText || hasSocial

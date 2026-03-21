@@ -8,15 +8,11 @@ import { CMSLink } from '@/components/Link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utilities/ui'
 
-function normalizePath(href: string): string {
-  if (!href || href === '/') return '/'
-  try {
-    const u = new URL(href, 'https://example.com')
-    return u.pathname.replace(/\/$/, '') || '/'
-  } catch {
-    return href.split('?')[0]?.replace(/\/$/, '') || '/'
-  }
-}
+import { HeaderNavDropdownDesktop, HeaderNavDropdownMobile } from './HeaderNavDropdown'
+import { hrefFromNavLink, isNavPathActive } from '../navLinkUtils'
+
+const navLinkClass =
+  'font-headline text-lg font-medium tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-b-primary'
 
 export const HeaderNav: React.FC<{
   data: HeaderType
@@ -31,25 +27,30 @@ export const HeaderNav: React.FC<{
       className={cn('flex items-center gap-7 lg:gap-10', mobile && 'flex-col items-stretch gap-4')}
       aria-label={mobile ? undefined : 'Fő navigáció'}
     >
-      {navItems.map(({ link }, i) => {
-        const href =
-          link?.type === 'reference' &&
-          typeof link.reference?.value === 'object' &&
-          link.reference.value &&
-          'slug' in link.reference.value
-            ? `${link.reference.relationTo !== 'pages' ? `/${link.reference.relationTo}` : ''}/${link.reference.value.slug}`
-            : link?.url || ''
+      {navItems.map((item, i) => {
+        const key = item.id ?? `nav-${i}`
 
-        const normalized = href ? normalizePath(href) : ''
-        const isActive = normalized === current || (normalized === '/' && current === '/')
+        if (item.itemType === 'dropdown') {
+          return mobile ? (
+            <HeaderNavDropdownMobile currentPath={current} item={item} key={key} />
+          ) : (
+            <HeaderNavDropdownDesktop currentPath={current} item={item} key={key} />
+          )
+        }
+
+        const link = item.link
+        if (!link) return null
+
+        const href = hrefFromNavLink(link)
+        const isActive = isNavPathActive(href, current)
 
         return (
           <CMSLink
-            key={i}
+            key={key}
             {...link}
             appearance="inline"
             className={cn(
-              'font-headline text-lg font-medium tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-b-primary',
+              navLinkClass,
               mobile ? 'border-b border-stone-100 py-2' : '',
               isActive ? 'text-b-primary' : 'text-b-primary/72 hover:text-b-primary',
             )}
