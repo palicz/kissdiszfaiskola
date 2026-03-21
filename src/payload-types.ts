@@ -212,7 +212,7 @@ export interface Page {
             url?: string | null;
             label: string;
             /**
-             * Choose how the link should be rendered.
+             * Válassza meg, hogyan jelenjen meg a link.
              */
             appearance?: ('default' | 'outline') | null;
           };
@@ -864,7 +864,7 @@ export interface CallToActionBlock {
           url?: string | null;
           label: string;
           /**
-           * Choose how the link should be rendered.
+           * Válassza meg, hogyan jelenjen meg a link.
            */
           appearance?: ('default' | 'outline') | null;
         };
@@ -914,7 +914,7 @@ export interface ContentBlock {
           url?: string | null;
           label: string;
           /**
-           * Choose how the link should be rendered.
+           * Válassza meg, hogyan jelenjen meg a link.
            */
           appearance?: ('default' | 'outline') | null;
         };
@@ -1176,7 +1176,7 @@ export interface Form {
 export interface Redirect {
   id: number;
   /**
-   * You will need to rebuild the website when changing this field.
+   * A mező módosítása után érdemes újraépíteni a honlapot, hogy az átirányítások érvényesüljenek.
    */
   from: string;
   to?: {

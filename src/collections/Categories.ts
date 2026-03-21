@@ -6,6 +6,10 @@ import { slugField } from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: {
+    plural: 'Kategóriák',
+    singular: 'Kategória',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -13,12 +17,14 @@ export const Categories: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    group: 'Tartalom',
     useAsTitle: 'title',
   },
   fields: [
     {
       name: 'title',
       type: 'text',
+      label: 'Megnevezés',
       required: true,
     },
     slugField({

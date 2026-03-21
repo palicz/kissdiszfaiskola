@@ -4,6 +4,7 @@ export const searchFields: Field[] = [
   {
     name: 'slug',
     type: 'text',
+    label: 'URL-rész (slug)',
     index: true,
     admin: {
       readOnly: true,
@@ -11,7 +12,7 @@ export const searchFields: Field[] = [
   },
   {
     name: 'meta',
-    label: 'Meta',
+    label: 'Metaadatok',
     type: 'group',
     index: true,
     admin: {
@@ -21,23 +22,23 @@ export const searchFields: Field[] = [
       {
         type: 'text',
         name: 'title',
-        label: 'Title',
+        label: 'Cím',
       },
       {
         type: 'text',
         name: 'description',
-        label: 'Description',
+        label: 'Leírás',
       },
       {
         name: 'image',
-        label: 'Image',
+        label: 'Kép',
         type: 'upload',
         relationTo: 'media',
       },
     ],
   },
   {
-    label: 'Categories',
+    label: 'Kategóriák',
     name: 'categories',
     type: 'array',
     admin: {

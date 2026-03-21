@@ -30,15 +30,15 @@ export const hero: Field = {
           value: 'kissHome',
         },
         {
-          label: 'High Impact',
+          label: 'Erős kiemelés',
           value: 'highImpact',
         },
         {
-          label: 'Medium Impact',
+          label: 'Közepes kiemelés',
           value: 'mediumImpact',
         },
         {
-          label: 'Low Impact',
+          label: 'Enyhe kiemelés',
           value: 'lowImpact',
         },
       ],

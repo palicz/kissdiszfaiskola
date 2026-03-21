@@ -13,22 +13,23 @@ const columnFields: Field[] = [
   {
     name: 'size',
     type: 'select',
+    label: 'Oszlopszélesség',
     defaultValue: 'oneThird',
     options: [
       {
-        label: 'One Third',
+        label: 'Harmad',
         value: 'oneThird',
       },
       {
-        label: 'Half',
+        label: 'Fél',
         value: 'half',
       },
       {
-        label: 'Two Thirds',
+        label: 'Kétharmad',
         value: 'twoThirds',
       },
       {
-        label: 'Full',
+        label: 'Teljes szélesség',
         value: 'full',
       },
     ],
@@ -66,10 +67,19 @@ const columnFields: Field[] = [
 export const Content: Block = {
   slug: 'content',
   interfaceName: 'ContentBlock',
+  labels: {
+    plural: 'Többoszlopos tartalom blokkok',
+    singular: 'Többoszlopos tartalom',
+  },
   fields: [
     {
       name: 'columns',
       type: 'array',
+      label: 'Oszlopok',
+      labels: {
+        plural: 'oszlopok',
+        singular: 'oszlop',
+      },
       admin: {
         initCollapsed: true,
       },

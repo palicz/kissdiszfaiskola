@@ -24,19 +24,20 @@ export const Archive: Block = {
           ]
         },
       }),
-      label: 'Intro Content',
+      label: 'Bevezető szöveg',
     },
     {
       name: 'populateBy',
       type: 'select',
+      label: 'Tartalom forrása',
       defaultValue: 'collection',
       options: [
         {
-          label: 'Collection',
+          label: 'Gyűjtemény alapján',
           value: 'collection',
         },
         {
-          label: 'Individual Selection',
+          label: 'Egyedi kiválasztás',
           value: 'selection',
         },
       ],
@@ -48,10 +49,10 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
       defaultValue: 'posts',
-      label: 'Collections To Show',
+      label: 'Megjelenítendő gyűjtemény',
       options: [
         {
-          label: 'Posts',
+          label: 'Bejegyzések',
           value: 'posts',
         },
       ],
@@ -63,7 +64,7 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
       hasMany: true,
-      label: 'Categories To Show',
+      label: 'Szűrés kategóriák szerint',
       relationTo: 'categories',
     },
     {
@@ -74,7 +75,7 @@ export const Archive: Block = {
         step: 1,
       },
       defaultValue: 10,
-      label: 'Limit',
+      label: 'Elemek száma',
     },
     {
       name: 'selectedDocs',
@@ -83,12 +84,12 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'selection',
       },
       hasMany: true,
-      label: 'Selection',
+      label: 'Kiválasztott elemek',
       relationTo: ['posts'],
     },
   ],
   labels: {
-    plural: 'Archives',
-    singular: 'Archive',
+    plural: 'Archívum blokkok',
+    singular: 'Archívum blokk',
   },
 }

@@ -5,8 +5,12 @@ import { revalidateHeader } from './hooks/revalidateHeader'
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  label: 'Fejléc',
   access: {
     read: () => true,
+  },
+  admin: {
+    group: 'Globális tartalom',
   },
   fields: [
     {
