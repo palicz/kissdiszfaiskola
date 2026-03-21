@@ -33,6 +33,10 @@ import {
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
+  labels: {
+    plural: 'Oldalak',
+    singular: 'Oldal',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -47,6 +51,7 @@ export const Pages: CollectionConfig<'pages'> = {
     slug: true,
   },
   admin: {
+    group: 'Tartalom',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
@@ -68,6 +73,7 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       name: 'title',
       type: 'text',
+      label: 'Cím',
       required: true,
     },
     {
@@ -75,7 +81,7 @@ export const Pages: CollectionConfig<'pages'> = {
       tabs: [
         {
           fields: [hero],
-          label: 'Hero',
+          label: 'Hero szekció',
         },
         {
           fields: [
@@ -105,7 +111,7 @@ export const Pages: CollectionConfig<'pages'> = {
               },
             },
           ],
-          label: 'Content',
+          label: 'Tartalom',
         },
         {
           name: 'meta',
@@ -139,6 +145,7 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       name: 'publishedAt',
       type: 'date',
+      label: 'Közzététel ideje',
       admin: {
         position: 'sidebar',
       },

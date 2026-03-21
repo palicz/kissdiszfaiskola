@@ -16,18 +16,25 @@ import { plugins as payloadPlugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
+import { en } from '@payloadcms/translations/languages/en'
+import { hu } from '@payloadcms/translations/languages/hu'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  i18n: {
+    supportedLanguages: { en, hu },
+    fallbackLanguage: 'hu',
+  },
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
-      beforeLogin: ['@/components/BeforeLogin'],
+      // beforeLogin: ['@/components/BeforeLogin'],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below.
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      // Fee     at any time. Simply remove the line below.
+      // beforeDashboard: ['@/components/BeforeDashboard'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -36,7 +43,7 @@ export default buildConfig({
     livePreview: {
       breakpoints: [
         {
-          label: 'Mobile',
+          label: 'Mobil',
           name: 'mobile',
           width: 375,
           height: 667,
@@ -48,7 +55,7 @@ export default buildConfig({
           height: 1024,
         },
         {
-          label: 'Desktop',
+          label: 'Asztali',
           name: 'desktop',
           width: 1440,
           height: 900,
@@ -62,6 +69,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

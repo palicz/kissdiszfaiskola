@@ -29,6 +29,10 @@ import { slugField } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  labels: {
+    plural: 'Bejegyzések',
+    singular: 'Bejegyzés',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -48,6 +52,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
+    group: 'Tartalom',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
@@ -69,6 +74,7 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'title',
       type: 'text',
+      label: 'Cím',
       required: true,
     },
     {
@@ -80,6 +86,7 @@ export const Posts: CollectionConfig<'posts'> = {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
+              label: 'Hero kép',
             },
             {
               name: 'content',
@@ -100,13 +107,14 @@ export const Posts: CollectionConfig<'posts'> = {
               required: true,
             },
           ],
-          label: 'Content',
+          label: 'Tartalom',
         },
         {
           fields: [
             {
               name: 'relatedPosts',
               type: 'relationship',
+              label: 'Kapcsolódó bejegyzések',
               admin: {
                 position: 'sidebar',
               },
@@ -123,6 +131,7 @@ export const Posts: CollectionConfig<'posts'> = {
             {
               name: 'categories',
               type: 'relationship',
+              label: 'Kategóriák',
               admin: {
                 position: 'sidebar',
               },
@@ -130,7 +139,7 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'categories',
             },
           ],
-          label: 'Meta',
+          label: 'Metaadatok és kapcsolódók',
         },
         {
           name: 'meta',
@@ -164,6 +173,7 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'publishedAt',
       type: 'date',
+      label: 'Közzététel ideje',
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
@@ -184,6 +194,7 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'authors',
       type: 'relationship',
+      label: 'Szerzők',
       admin: {
         position: 'sidebar',
       },

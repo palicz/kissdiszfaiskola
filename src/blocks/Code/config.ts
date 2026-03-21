@@ -7,14 +7,15 @@ export const Code: Block = {
     {
       name: 'language',
       type: 'select',
+      label: 'Nyelv',
       defaultValue: 'typescript',
       options: [
         {
-          label: 'Typescript',
+          label: 'TypeScript',
           value: 'typescript',
         },
         {
-          label: 'Javascript',
+          label: 'JavaScript',
           value: 'javascript',
         },
         {
@@ -26,8 +27,12 @@ export const Code: Block = {
     {
       name: 'code',
       type: 'code',
-      label: false,
+      label: 'Forráskód',
       required: true,
     },
   ],
+  labels: {
+    plural: 'Kód blokkok',
+    singular: 'Kód blokk',
+  },
 }

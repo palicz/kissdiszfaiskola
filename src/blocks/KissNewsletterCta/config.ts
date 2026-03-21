@@ -38,6 +38,22 @@ export const KissNewsletterCta: Block = {
       defaultValue:
         'Az e-mail-címét bizalmasan kezeljük, harmadik félnek nem adjuk át. A hírlevélről bármikor, könnyen leiratkozhat.',
     },
+    {
+      name: 'newsletterForm',
+      type: 'relationship',
+      relationTo: 'forms',
+      label: 'Payload űrlap (beküldés)',
+      admin: {
+        description:
+          'Kötelező a működéshez: válassza a „Hírlevél feliratkozás” űrlapot (Űrlapok), vagy hozzon létre egyet legalább egy „E-mail” mezővel (blokk neve: email). A POST /next/seed (admin) létrehozza az alap űrlapot.',
+      },
+    },
+    {
+      name: 'successMessage',
+      type: 'text',
+      label: 'Sikeres feliratkozás szövege',
+      defaultValue: 'Köszönjük a feliratkozást!',
+    },
   ],
   labels: {
     plural: 'Kiss — Hírlevél / CTA blokkok',

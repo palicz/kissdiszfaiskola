@@ -16,6 +16,10 @@ const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    plural: 'Médiafájlok',
+    singular: 'Médiafájl',
+  },
   folders: true,
   access: {
     create: authenticated,
@@ -23,15 +27,20 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
+  admin: {
+    group: 'Tartalom',
+  },
   fields: [
     {
       name: 'alt',
       type: 'text',
+      label: 'Alternatív szöveg (alt)',
       //required: true,
     },
     {
       name: 'caption',
       type: 'richText',
+      label: 'Felirat',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]

@@ -37,7 +37,7 @@ export const defaultLexical = lexicalEditor({
               if ((options?.siblingData as LinkFields)?.linkType === 'internal') {
                 return true // no validation needed, as no url should exist for internal links
               }
-              return value ? true : 'URL is required'
+              return value ? true : 'A webcím megadása kötelező.'
             }) as TextFieldSingleValidation,
           },
         ]

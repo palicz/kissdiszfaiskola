@@ -13,8 +13,10 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
+const siteName = 'Kiss Díszfaiskola'
+
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | ${siteName}` : siteName
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -27,6 +29,13 @@ export const plugins: Plugin[] = [
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
+      labels: {
+        plural: 'Átirányítások',
+        singular: 'Átirányítás',
+      },
+      admin: {
+        group: 'Rendszer',
+      },
       // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
@@ -34,7 +43,8 @@ export const plugins: Plugin[] = [
             return {
               ...field,
               admin: {
-                description: 'You will need to rebuild the website when changing this field.',
+                description:
+                  'A mező módosítása után érdemes újraépíteni a honlapot, hogy az átirányítások érvényesüljenek.',
               },
             }
           }
@@ -59,6 +69,13 @@ export const plugins: Plugin[] = [
       payment: false,
     },
     formOverrides: {
+      labels: {
+        plural: 'Űrlapok',
+        singular: 'Űrlap',
+      },
+      admin: {
+        group: 'Rendszer',
+      },
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'confirmationMessage') {
@@ -79,11 +96,27 @@ export const plugins: Plugin[] = [
         })
       },
     },
+    formSubmissionOverrides: {
+      labels: {
+        plural: 'Űrlap beküldések',
+        singular: 'Űrlap beküldés',
+      },
+      admin: {
+        group: 'Rendszer',
+      },
+    },
   }),
   searchPlugin({
     collections: ['posts'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
+      labels: {
+        plural: 'Keresési találatok',
+        singular: 'Keresési találat',
+      },
+      admin: {
+        group: 'Rendszer',
+      },
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields]
       },

@@ -12,12 +12,13 @@ export const Banner: Block = {
     {
       name: 'style',
       type: 'select',
+      label: 'Stílus',
       defaultValue: 'info',
       options: [
-        { label: 'Info', value: 'info' },
-        { label: 'Warning', value: 'warning' },
-        { label: 'Error', value: 'error' },
-        { label: 'Success', value: 'success' },
+        { label: 'Tájékoztató', value: 'info' },
+        { label: 'Figyelmeztetés', value: 'warning' },
+        { label: 'Hiba', value: 'error' },
+        { label: 'Siker', value: 'success' },
       ],
       required: true,
     },
@@ -34,4 +35,8 @@ export const Banner: Block = {
     },
   ],
   interfaceName: 'BannerBlock',
+  labels: {
+    plural: 'Szalagcím (banner) blokkok',
+    singular: 'Szalagcím (banner)',
+  },
 }
