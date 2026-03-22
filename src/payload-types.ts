@@ -228,6 +228,7 @@ export interface Page {
     | KissOurStoryBlock
     | KissPlantCatalogBlock
     | KissGalleryBlock
+    | KissFolderSlideshowBlock
     | KissSplitFeatureBlock
     | KissLoyaltyHighlightsBlock
     | KissCalloutBlock
@@ -743,6 +744,32 @@ export interface KissGalleryBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'kissGallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissFolderSlideshowBlock".
+ */
+export interface KissFolderSlideshowBlock {
+  /**
+   * Opcionális, a cím fölött (pl. gyűjtemény neve).
+   */
+  eyebrow?: string | null;
+  /**
+   * Opcionális szekciócím. Ha üres, csak a diavetítés látszik.
+   */
+  title?: string | null;
+  /**
+   * Válassz média mappát (pl. Plants). Csak a mappába közvetlenül tett képek kerülnek a diavetítésbe. Egy kép vágását a média szerkesztőben a fókuszponttal is finomhangolhatod.
+   */
+  folder: number | FolderInterface;
+  transition: 'crossfade' | 'slide' | 'fadeScale' | 'instant';
+  /**
+   * Mennyi ideig látszik egy kép, mielőtt a következőre vált (2–20 mp).
+   */
+  intervalMs: number;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kissFolderSlideshow';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1529,6 +1556,7 @@ export interface PagesSelect<T extends boolean = true> {
         kissOurStory?: T | KissOurStoryBlockSelect<T>;
         kissPlantCatalog?: T | KissPlantCatalogBlockSelect<T>;
         kissGallery?: T | KissGalleryBlockSelect<T>;
+        kissFolderSlideshow?: T | KissFolderSlideshowBlockSelect<T>;
         kissSplitFeature?: T | KissSplitFeatureBlockSelect<T>;
         kissLoyaltyHighlights?: T | KissLoyaltyHighlightsBlockSelect<T>;
         kissCallout?: T | KissCalloutBlockSelect<T>;
@@ -1711,6 +1739,19 @@ export interface KissGalleryBlockSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KissFolderSlideshowBlock_select".
+ */
+export interface KissFolderSlideshowBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  folder?: T;
+  transition?: T;
+  intervalMs?: T;
   id?: T;
   blockName?: T;
 }
