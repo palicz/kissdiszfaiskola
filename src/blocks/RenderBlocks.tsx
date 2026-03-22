@@ -10,6 +10,7 @@ import { KissCalloutBlock } from '@/blocks/KissCallout/Component'
 import { KissContactDetailsBlock } from '@/blocks/KissContactDetails/Component'
 import { KissLoyaltyHighlightsBlock } from '@/blocks/KissLoyaltyHighlights/Component'
 import { KissSplitFeatureBlock } from '@/blocks/KissSplitFeature/Component'
+import { KissFolderSlideshowBlock } from '@/blocks/KissFolderSlideshow/Component'
 import { KissGalleryBlock } from '@/blocks/KissGallery/Component'
 import { KissNewsletterBlock } from '@/blocks/KissNewsletterCta/Component'
 import { KissOurStoryBlock } from '@/blocks/KissOurStory/Component'
@@ -29,6 +30,7 @@ const blockComponents = {
   kissOurStory: KissOurStoryBlock,
   kissPlantCatalog: KissPlantCatalogBlock,
   kissGallery: KissGalleryBlock,
+  kissFolderSlideshow: KissFolderSlideshowBlock,
   kissSplitFeature: KissSplitFeatureBlock,
   kissLoyaltyHighlights: KissLoyaltyHighlightsBlock,
   kissCallout: KissCalloutBlock,

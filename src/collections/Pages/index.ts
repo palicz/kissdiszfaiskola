@@ -12,6 +12,7 @@ import { KissCallout } from '../../blocks/KissCallout/config'
 import { KissContactDetails } from '../../blocks/KissContactDetails/config'
 import { KissLoyaltyHighlights } from '../../blocks/KissLoyaltyHighlights/config'
 import { KissSplitFeature } from '../../blocks/KissSplitFeature/config'
+import { KissFolderSlideshow } from '../../blocks/KissFolderSlideshow/config'
 import { KissGallery } from '../../blocks/KissGallery/config'
 import { KissPlantCatalog } from '../../blocks/KissPlantCatalog/config'
 import { KissSpecimenShowcase } from '../../blocks/KissSpecimenShowcase/config'
@@ -96,6 +97,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 KissOurStory,
                 KissPlantCatalog,
                 KissGallery,
+                KissFolderSlideshow,
                 KissSplitFeature,
                 KissLoyaltyHighlights,
                 KissCallout,
