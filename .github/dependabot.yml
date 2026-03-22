@@ -5,6 +5,12 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
+    # @payloadcms/next peer: next ">=15.4.11 <15.5.0" — automatikus 15.5+ bump törné a peer dep-et
+    ignore:
+      - dependency-name: 'next'
+        update-types:
+          - 'version-update:semver-minor'
+          - 'version-update:semver-major'
     groups:
       npm-dependencies:
         patterns:

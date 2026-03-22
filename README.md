@@ -32,7 +32,7 @@ Admin: `/admin` — első felhasználó létrehozása után érhető el.
 
 A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. Manuálisan: **Actions → CI → Run workflow**. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
 
-[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj.
+[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj. A **`next`** csomag **minor/major** bumpja ki van zárva, amíg a `@payloadcms/next` peer range **`<15.5.0`** (15.4.x maradhat); különben ütközik a Payloaddal és típushibák jönnek (pl. `revalidateTag`).
 
 ### `main` branch védelem (ajánlott)
 
@@ -40,7 +40,7 @@ A GitHub figyelmeztetése („Your main branch isn't protected”) — érdemes 
 
 1. Repo **Settings → Rules → Rulesets** (vagy **Branches → Branch protection rule**).
 2. **Add rule** / **Add branch ruleset** — cél: `main`.
-3. Kapcsold be: **Require a pull request before merging** (opcionálisan review), **Require status checks to pass** — válaszd ki: **`Lint & TypeScript`** (ez a CI job neve).
+3. Kapcsold be: **Require a pull request before merging** (opcionálisan review), **Require status checks to pass** — a listában a **zöld CI** után megjelenő nevet add meg (tipikusan **`CI / lint-and-typecheck`** vagy **`lint-and-typecheck`**). Ne olyan nevet várj, ami sosem jelenik meg („Expected — Waiting…”) — a GitHub a **job azonosító** (`lint-and-typecheck`) alapján is listázhat, nem a `name: Lint & TypeScript` felirat alapján.
 4. Opcionális: **Do not allow bypassing the above settings** (admin kivétel nélkül).
 
 Így nem lehet véletlenül zöld CI nélkül merge-elni a `main`-re.
