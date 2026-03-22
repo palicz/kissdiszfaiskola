@@ -30,8 +30,19 @@ Admin: `/admin` — első felhasználó létrehozása után érhető el.
 
 ## CI
 
-A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
+A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. Manuálisan: **Actions → CI → Run workflow**. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
 
 [Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj.
+
+### `main` branch védelem (ajánlott)
+
+A GitHub figyelmeztetése („Your main branch isn't protected”) — érdemes bekapcsolni:
+
+1. Repo **Settings → Rules → Rulesets** (vagy **Branches → Branch protection rule**).
+2. **Add rule** / **Add branch ruleset** — cél: `main`.
+3. Kapcsold be: **Require a pull request before merging** (opcionálisan review), **Require status checks to pass** — válaszd ki: **`Lint & TypeScript`** (ez a CI job neve).
+4. Opcionális: **Do not allow bypassing the above settings** (admin kivétel nélkül).
+
+Így nem lehet véletlenül zöld CI nélkül merge-elni a `main`-re.
 
 Payload dokumentáció: [payloadcms.com/docs](https://payloadcms.com/docs)
