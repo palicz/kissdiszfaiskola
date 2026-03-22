@@ -25,13 +25,13 @@ Admin: `/admin` — első felhasználó létrehozása után érhető el.
 
 1. **Lokálisan:** `pnpm dev`, változtatás, `pnpm lint` + `pnpm exec tsc --noEmit` (és ha kell séma: `pnpm generate:types`, migráció: `pnpm payload:migrate`).
 2. **Commit → push → PR:** a GitHubon **CI** lefut (lint + TypeScript).
-3. **Vercel:** minden PR-hez **Preview** URL, `main` merge után **Production** deploy (ha a repo így van kötve).
+3. **Vercel:** a saját branchjeid / feature PR-jeidhez **Preview** URL; `main` merge után **Production**. A **Dependabot** commitokra nem fut Vercel build ([`vercel.json`](vercel.json) — sorban állás / felesleges preview elkerülése); a GitHub **CI** továbbra is lefut a PR-en.
 4. **Séma változásnál** a migrációkat commitold; élesen a build előtt/után fusson a `payload migrate` (Vercel **Build Command** / **Deploy Hook** / külön job — ezt érdemes külön beállítani).
 
 ## CI
 
 A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
 
-[Dependabot](.github/dependabot.yml): heti npm, havi GitHub Actions frissítések PR-ben.
+[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj.
 
 Payload dokumentáció: [payloadcms.com/docs](https://payloadcms.com/docs)
