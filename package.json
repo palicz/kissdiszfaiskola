@@ -71,7 +71,7 @@
     "@vitejs/plugin-react": "4.5.2",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.16.0",
-    "eslint-config-next": "15.4.11",
+    "eslint-config-next": "15.5.14",
     "jsdom": "28.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.4.2",
@@ -91,6 +91,15 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "next": ">=15.5.0 <15.6.0"
+      }
+    },
+    "ignoredBuiltDependencies": [
+      "bufferutil",
+      "utf-8-validate"
     ]
   }
 }

@@ -15,6 +15,10 @@ updates:
       npm-dependencies:
         patterns:
           - '*'
+        # Külön PR-ekben frissüljenek — a nagy csoportos bump könnyen szétcsúsztatja a next lint / flat config párost (pl. „circular structure to JSON”).
+        exclude-patterns:
+          - 'eslint*'
+          - '@eslint/*'
 
   - package-ecosystem: github-actions
     directory: /

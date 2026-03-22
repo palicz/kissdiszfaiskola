@@ -32,7 +32,7 @@ Admin: `/admin` — első felhasználó létrehozása után érhető el.
 
 A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. Manuálisan: **Actions → CI → Run workflow**. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
 
-[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj. A **`next`** csomag **minor/major** bumpja ki van zárva, amíg a `@payloadcms/next` peer range **`<15.5.0`** (15.4.x maradhat); különben ütközik a Payloaddal és típushibák jönnek (pl. `revalidateTag`).
+[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj. A **`next`** automatikus **minor/major** Dependabot bumpja ki van zárva (a `@payloadcms/next` peer deklarációja hivatalosan még `<15.5.0` vagy a 16.2 canary ág); a repóban **`pnpm.peerDependencyRules.allowedVersions`** engedi a **Next 15.5.x** + Payload 3.79 együttállást. Ha a Payload frissül és a peer range bővül, ez a szabály eltávolítható.
 
 ### `main` branch védelem (ajánlott)
 
