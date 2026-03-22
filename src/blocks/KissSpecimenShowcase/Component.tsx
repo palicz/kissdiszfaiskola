@@ -4,6 +4,78 @@ import type { KissSpecimenBlock as KissSpecimenBlockProps } from '@/payload-type
 
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
+import { cn } from '@/utilities/ui'
+
+/** listLink és cardLink ugyanaz a link-alakzat a sémában */
+type SpecimenCtaLink = KissSpecimenBlockProps['listLink']
+
+const ctaEase = 'ease-[cubic-bezier(0.22,1,0.36,1)]'
+
+/** Szöveg finom balra csúszik, amikor jobbra megjelenik a nyíl + gap (jobbra igazított és balra igazított CTA-n is ugyanígy néz ki). */
+const desktopCtaLabelShift = cn(
+  'inline-block min-w-0 transition-transform duration-300',
+  ctaEase,
+  'group-hover:-translate-x-1 group-focus-within:-translate-x-1',
+  'motion-reduce:translate-x-0 motion-reduce:transition-none',
+)
+
+function DesktopCtaArrow({ iconClassName }: { iconClassName: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-block h-5 w-0 overflow-hidden opacity-0 transition-[width,opacity] duration-300',
+        ctaEase,
+        'group-hover:w-5 group-hover:opacity-100 group-focus-within:w-5 group-focus-within:opacity-100',
+        'motion-reduce:transition-none',
+      )}
+      aria-hidden
+    >
+      <span
+        className={cn(
+          'material-symbols-outlined flex h-5 w-5 shrink-0 translate-y-full items-center justify-center text-sm leading-none transition-transform duration-500',
+          ctaEase,
+          'group-hover:translate-y-0 group-focus-within:translate-y-0',
+          'motion-reduce:translate-y-0 motion-reduce:transition-none',
+          iconClassName,
+        )}
+      >
+        north_east
+      </span>
+    </span>
+  )
+}
+
+/**
+ * Asztali CTA: alapból nincs nyíl; hover/fókuszra gap + nyíl feljön alulról; a címke együtt mozdul.
+ * A szülő layout dönti el (fejléc: jobbra; kártya: balra) — a komponens mindkét esetben ugyanazt csinálja.
+ */
+function DesktopSpecimenCta({
+  link,
+  wrapperClassName,
+  linkClassName,
+  iconClassName,
+}: {
+  link: SpecimenCtaLink
+  wrapperClassName: string
+  linkClassName: string
+  iconClassName: string
+}) {
+  const { label, ...linkRest } = link
+  return (
+    <span
+      className={cn(
+        'group inline-flex items-center gap-0 transition-[gap] duration-300 ease-out',
+        'group-hover:gap-3 group-focus-within:gap-3',
+        wrapperClassName,
+      )}
+    >
+      <CMSLink {...linkRest} appearance="inline" className={linkClassName}>
+        <span className={desktopCtaLabelShift}>{label}</span>
+      </CMSLink>
+      <DesktopCtaArrow iconClassName={iconClassName} />
+    </span>
+  )
+}
 
 export const KissSpecimenBlock: React.FC<KissSpecimenBlockProps> = (props) => {
   const {
@@ -132,16 +204,12 @@ export const KissSpecimenBlock: React.FC<KissSpecimenBlockProps> = (props) => {
               </h2>
             </div>
             {listLink && (listLink.url || listLink.type === 'reference') ? (
-              <span className="inline-flex items-center gap-3 border-b border-b-primary/20 pb-2">
-                <CMSLink
-                  {...listLink}
-                  appearance="inline"
-                  className="font-sans text-xs uppercase tracking-[0.2em] text-b-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-b-primary"
-                />
-                <span className="material-symbols-outlined text-sm text-b-primary" aria-hidden>
-                  north_east
-                </span>
-              </span>
+              <DesktopSpecimenCta
+                iconClassName="text-b-primary"
+                link={listLink}
+                linkClassName="font-sans text-xs uppercase tracking-[0.2em] text-b-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-b-primary"
+                wrapperClassName="border-b border-b-primary/20 pb-2"
+              />
             ) : null}
           </div>
           <div className="grid grid-cols-12 gap-6">
@@ -202,10 +270,11 @@ export const KissSpecimenBlock: React.FC<KissSpecimenBlockProps> = (props) => {
                   </p>
                 ) : null}
                 {cardLink && (cardLink.url || cardLink.type === 'reference') ? (
-                  <CMSLink
-                    {...cardLink}
-                    appearance="inline"
-                    className="w-fit border-b border-emerald-900/20 pb-1 font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-900 transition-colors hover:border-emerald-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-b-primary"
+                  <DesktopSpecimenCta
+                    iconClassName="text-emerald-900"
+                    link={cardLink}
+                    linkClassName="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-b-primary"
+                    wrapperClassName="w-fit border-b border-emerald-900/20 pb-1 transition-[border-color] duration-300 ease-out hover:border-emerald-900 focus-within:border-emerald-900"
                   />
                 ) : null}
               </div>
