@@ -1,7 +1,7 @@
 {
   "name": "kissdiszfaiskola",
   "version": "1.0.0",
-  "description": "Website template for Payload",
+  "description": "Kiss Díszfaiskola — Next.js + Payload CMS",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -16,7 +16,6 @@
     "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "payload:migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
-    "stitch:fetch": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/fetch-stitch-assets.mts",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
@@ -61,7 +60,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
-    "@google/stitch-sdk": "^0.0.3",
     "@playwright/test": "1.58.2",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",

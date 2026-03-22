@@ -14,6 +14,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
 import './globals.css'
+import { SITE_NAME } from '@/constants/site'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const newsreader = Newsreader({
@@ -69,7 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  title: 'Kiss Díszfaiskola',
+  title: SITE_NAME,
   icons: {
     icon: '/favicon.ico',
   },

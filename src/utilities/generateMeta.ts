@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { SITE_NAME } from '@/constants/site'
 import type { Media, Page, Post, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
@@ -7,8 +8,7 @@ import { getServerSideURL } from './getURL'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
-
-  let url = serverUrl + '/website-template-OG.webp'
+  let url = `${serverUrl}/opengraph-image`
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url
@@ -26,7 +26,7 @@ export const generateMeta = async (args: {
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title?.trim() || 'Kiss Díszfaiskola'
+  const title = doc?.meta?.title?.trim() || SITE_NAME
 
   return {
     description: doc?.meta?.description,

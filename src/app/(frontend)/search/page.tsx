@@ -1,5 +1,6 @@
 import type { Metadata } from 'next/types'
 
+import { SITE_NAME } from '@/constants/site'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -81,6 +82,6 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: `Keresés — ${SITE_NAME}`,
   }
 }
