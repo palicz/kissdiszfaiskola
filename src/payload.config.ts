@@ -20,6 +20,8 @@ import { migrations } from './migrations'
 import { en } from '@payloadcms/translations/languages/en'
 import { hu } from '@payloadcms/translations/languages/hu'
 
+import { imageOptimizer } from '@inoo-ch/payload-image-optimizer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -74,6 +76,11 @@ export default buildConfig({
     vercelBlobStorage({
       token: process.env.BLOB_READ_WRITE_TOKEN,
       collections: { media: true },
+    }),
+    imageOptimizer({
+      collections: {
+        media: true,
+      },
     }),
     ...payloadPlugins,
   ],

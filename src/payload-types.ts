@@ -124,6 +124,8 @@ export interface Config {
   user: User;
   jobs: {
     tasks: {
+      imageOptimizer_convertFormats: TaskImageOptimizerConvertFormats;
+      imageOptimizer_regenerateDocument: TaskImageOptimizerRegenerateDocument;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -280,6 +282,25 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  imageOptimizer?: {
+    thumbHash?: string | null;
+    originalSize?: number | null;
+    optimizedSize?: number | null;
+    status?: ('pending' | 'processing' | 'complete' | 'error') | null;
+    error?: string | null;
+    variants?:
+      | {
+          format?: string | null;
+          filename?: string | null;
+          filesize?: number | null;
+          width?: number | null;
+          height?: number | null;
+          mimeType?: string | null;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -1382,7 +1403,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
+        taskSlug: 'inline' | 'imageOptimizer_convertFormats' | 'imageOptimizer_regenerateDocument' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -1415,7 +1436,9 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
+  taskSlug?:
+    | ('inline' | 'imageOptimizer_convertFormats' | 'imageOptimizer_regenerateDocument' | 'schedulePublish')
+    | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -1958,6 +1981,27 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  imageOptimizer?:
+    | T
+    | {
+        thumbHash?: T;
+        originalSize?: T;
+        optimizedSize?: T;
+        status?: T;
+        error?: T;
+        variants?:
+          | T
+          | {
+              format?: T;
+              filename?: T;
+              filesize?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              url?: T;
+              id?: T;
+            };
+      };
   folder?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2563,6 +2607,33 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskImageOptimizer_convertFormats".
+ */
+export interface TaskImageOptimizerConvertFormats {
+  input: {
+    collectionSlug: string;
+    docId: string;
+  };
+  output: {
+    variantsGenerated?: number | null;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskImageOptimizer_regenerateDocument".
+ */
+export interface TaskImageOptimizerRegenerateDocument {
+  input: {
+    collectionSlug: string;
+    docId: string;
+  };
+  output: {
+    status?: string | null;
+    reason?: string | null;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
