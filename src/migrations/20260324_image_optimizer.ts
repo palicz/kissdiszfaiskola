@@ -1,10 +1,8 @@
 import { MigrateDownArgs, MigrateUpArgs, sql } from '@payloadcms/db-vercel-postgres'
 
 /**
- * Incremental migration: @inoo-ch/payload-image-optimizer fields on `media` + job task enum values.
- *
- * Commit 2a63d57 added the plugin without a migration; dev used schema push, production needs this SQL.
- * Do not use `migrate:create` without a database connection — it generates a full snapshot and is unsafe here.
+ * Historical migration (plugin since removed). Kept so `payload_migrations` checksums stay valid.
+ * `20260325_remove_image_optimizer` drops this schema immediately after on new installs.
  */
 export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`

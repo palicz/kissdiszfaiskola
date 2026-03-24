@@ -23,7 +23,6 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
-    "@inoo-ch/payload-image-optimizer": "^1.4.5",
     "@payloadcms/admin-bar": "3.80.0",
     "@payloadcms/db-vercel-postgres": "3.80.0",
     "@payloadcms/live-preview-react": "3.80.0",
