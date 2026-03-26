@@ -1,0 +1,48 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+
+vi.mock('@/utilities/canUseDOM', () => ({ default: false }))
+
+describe('getServerSideURL', () => {
+  const ORIGINAL_ENV = process.env
+
+  beforeEach(() => {
+    vi.resetModules()
+    process.env = { ...ORIGINAL_ENV }
+    delete process.env.NEXT_PUBLIC_SERVER_URL
+    delete process.env.VERCEL_URL
+    delete process.env.VERCEL_PROJECT_PRODUCTION_URL
+  })
+
+  async function loadModule() {
+    return await import('@/utilities/getURL')
+  }
+
+  it('returns NEXT_PUBLIC_SERVER_URL when set', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = 'https://example.com'
+    const { getServerSideURL } = await loadModule()
+    expect(getServerSideURL()).toBe('https://example.com')
+  })
+
+  it('prepends https:// when protocol is missing', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = 'example.com'
+    const { getServerSideURL } = await loadModule()
+    expect(getServerSideURL()).toBe('https://example.com')
+  })
+
+  it('strips trailing slash', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = 'https://example.com/'
+    const { getServerSideURL } = await loadModule()
+    expect(getServerSideURL()).toBe('https://example.com')
+  })
+
+  it('falls back to VERCEL_URL', async () => {
+    process.env.VERCEL_URL = 'my-app.vercel.app'
+    const { getServerSideURL } = await loadModule()
+    expect(getServerSideURL()).toBe('https://my-app.vercel.app')
+  })
+
+  it('falls back to localhost when no env vars are set', async () => {
+    const { getServerSideURL } = await loadModule()
+    expect(getServerSideURL()).toBe('http://localhost:3000')
+  })
+})
