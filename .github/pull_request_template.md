@@ -1,8 +1,10 @@
-## Összefoglaló
+## Summary
 
-<!-- Mit változtattál, miért? -->
+<!-- What changed and why? Link related issues if applicable. -->
 
-## Ellenőrzés merge előtt
+## Pre-merge checklist
 
-- [ ] Lokálisan: `pnpm lint` és `pnpm exec tsc --noEmit` (vagy a PR alatt zöld **CI**)
-- [ ] Payload séma / migráció változott? → `pnpm generate:types`, migrációk commitolva; éles deploy szokás szerint
+- [ ] `pnpm lint` and `pnpm exec tsc --noEmit` pass (or CI is green)
+- [ ] No unrelated changes included
+- [ ] Schema / migration changed? `pnpm generate:types` run, migration committed, verified on dev DB
+- [ ] Environment variables changed? `.env.example` updated

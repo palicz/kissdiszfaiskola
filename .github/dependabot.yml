@@ -5,7 +5,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
-    # @payloadcms/next peer: next ">=15.4.11 <15.5.0" — automatikus 15.5+ bump törné a peer dep-et
+    # @payloadcms/next peers allow next >=15.5.x; auto-bumping minor/major
+    # risks breaking the peer constraint. Bump manually after verifying
+    # compatibility with the Payload release notes.
     ignore:
       - dependency-name: 'next'
         update-types:
@@ -15,7 +17,8 @@ updates:
       npm-dependencies:
         patterns:
           - '*'
-        # Külön PR-ekben frissüljenek — a nagy csoportos bump könnyen szétcsúsztatja a next lint / flat config párost (pl. „circular structure to JSON”).
+        # ESLint ecosystem updates are excluded from the bulk group to avoid
+        # circular-structure-to-JSON and flat-config compatibility issues.
         exclude-patterns:
           - 'eslint*'
           - '@eslint/*'
