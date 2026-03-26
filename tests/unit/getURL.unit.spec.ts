@@ -8,9 +8,9 @@ describe('getServerSideURL', () => {
   beforeEach(() => {
     vi.resetModules()
     process.env = { ...ORIGINAL_ENV }
-    delete process.env.NEXT_PUBLIC_SERVER_URL
-    delete process.env.VERCEL_URL
-    delete process.env.VERCEL_PROJECT_PRODUCTION_URL
+    Reflect.deleteProperty(process.env, 'NEXT_PUBLIC_SERVER_URL')
+    Reflect.deleteProperty(process.env, 'VERCEL_URL')
+    Reflect.deleteProperty(process.env, 'VERCEL_PROJECT_PRODUCTION_URL')
   })
 
   async function loadModule() {
