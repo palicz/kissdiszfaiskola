@@ -22,12 +22,16 @@ describe('authenticated', () => {
 
 describe('authenticatedOrPublished', () => {
   it('returns true for an authenticated user', () => {
-    const result = authenticatedOrPublished(fakeArgs({ id: '1' }) as Parameters<typeof authenticatedOrPublished>[0])
+    const result = authenticatedOrPublished(
+      fakeArgs({ id: '1' }) as Parameters<typeof authenticatedOrPublished>[0],
+    )
     expect(result).toBe(true)
   })
 
   it('returns a published-only query constraint for anonymous visitors', () => {
-    const result = authenticatedOrPublished(fakeArgs(null) as Parameters<typeof authenticatedOrPublished>[0])
+    const result = authenticatedOrPublished(
+      fakeArgs(null) as Parameters<typeof authenticatedOrPublished>[0],
+    )
     expect(result).toEqual({ _status: { equals: 'published' } })
   })
 })
