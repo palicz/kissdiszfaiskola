@@ -5,6 +5,7 @@ node_modules
 .env
 .next
 .vercel
+coverage
 
 # TypeScript incremental cache — ne verziózzuk (merge conflict forrása)
 tsconfig.tsbuildinfo

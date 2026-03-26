@@ -1,20 +1,27 @@
-import { getPayload, Payload } from 'payload'
+import { getPayload } from 'payload'
 import config from '@/payload.config'
 
 import { describe, it, beforeAll, expect } from 'vitest'
 
-let payload: Payload
+const hasDatabase = Boolean(process.env.POSTGRES_URL?.trim())
 
-describe('API', () => {
+describe.skipIf(!hasDatabase)('Payload integration', () => {
+  let payload: Awaited<ReturnType<typeof getPayload>>
+
   beforeAll(async () => {
     const payloadConfig = await config
     payload = await getPayload({ config: payloadConfig })
   })
 
-  it('fetches users', async () => {
-    const users = await payload.find({
-      collection: 'users',
+  it('boots Payload and can query with access enforced', async () => {
+    const result = await payload.find({
+      collection: 'pages',
+      limit: 1,
+      depth: 0,
+      overrideAccess: false,
     })
-    expect(users).toBeDefined()
+    expect(result).toBeDefined()
+    expect(Array.isArray(result.docs)).toBe(true)
   })
 })
+
