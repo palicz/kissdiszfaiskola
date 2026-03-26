@@ -40,5 +40,5 @@ jobs:
       - name: Typecheck
         run: pnpm exec tsc --noEmit
 
-      - name: Unit tests
-        run: pnpm exec vitest run --config ./vitest.config.mts --passWithNoTests --dir tests/unit
+      - name: Unit tests (with coverage)
+        run: pnpm run test:unit
