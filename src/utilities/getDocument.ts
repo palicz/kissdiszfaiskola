@@ -12,6 +12,7 @@ async function getDocument(collection: Collection, slug: string, depth = 0) {
   const page = await payload.find({
     collection,
     depth,
+    overrideAccess: false,
     where: {
       slug: {
         equals: slug,
@@ -22,10 +23,25 @@ async function getDocument(collection: Collection, slug: string, depth = 0) {
   return page.docs[0]
 }
 
-/**
- * Returns a unstable_cache function mapped with the cache tag for the slug
- */
+async function getDocumentById(collection: Collection, id: string, depth = 0) {
+  const payload = await getPayload({ config: configPromise })
+
+  const doc = await payload.findByID({
+    collection,
+    id,
+    depth,
+    overrideAccess: false,
+  })
+
+  return doc
+}
+
 export const getCachedDocument = (collection: Collection, slug: string) =>
   unstable_cache(async () => getDocument(collection, slug), [collection, slug], {
     tags: [`${collection}_${slug}`],
+  })
+
+export const getCachedDocumentById = (collection: Collection, id: string) =>
+  unstable_cache(async () => getDocumentById(collection, id), [collection, id], {
+    tags: [`${collection}_${id}`],
   })
