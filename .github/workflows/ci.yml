@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, develop]
   pull_request:
-    branches: [main, master]
+    branches: [main, develop]
   workflow_dispatch:
 
 permissions:
@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-and-typecheck:
-    name: Lint & TypeScript
+  quality:
+    name: Quality Gates
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -34,8 +34,11 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: ESLint
+      - name: Lint
         run: pnpm lint
 
-      - name: TypeScript
+      - name: Typecheck
         run: pnpm exec tsc --noEmit
+
+      - name: Unit tests
+        run: pnpm exec vitest run --config ./vitest.config.mts --passWithNoTests --dir tests/unit

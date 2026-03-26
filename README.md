@@ -1,48 +1,164 @@
-# Kiss Díszfaiskola
+# Kiss Diszfaiskola
 
-A honlap [Next.js](https://nextjs.org) App Routerrel és [Payload CMS](https://payloadcms.com) 3-mal épül: tartalomkezelés, média (Vercel Blob), Postgres (Neon / Vercel Postgres adapter).
+Content-managed website for Kiss Diszfaiskola, built with [Next.js](https://nextjs.org) (App Router) and [Payload CMS](https://payloadcms.com) 3. Hosted on [Vercel](https://vercel.com).
 
-## Fejlesztés
+## Architecture
 
-1. Függőségek: `pnpm install`
-2. Környezet: másold `.env.example` → `.env` vagy `.env.local`.
-3. Indítás: `pnpm dev` → [http://localhost:3000](http://localhost:3000)
+| Layer            | Technology                        |
+| ---------------- | --------------------------------- |
+| Framework        | Next.js 15 (App Router)           |
+| CMS              | Payload CMS 3                     |
+| Database         | PostgreSQL (Vercel Postgres)      |
+| Media storage    | Vercel Blob                       |
+| Rich text editor | Lexical                           |
+| Styling          | Tailwind CSS v4                   |
+| Language         | TypeScript (strict)               |
+| Hosting          | Vercel                            |
 
-Admin: `/admin` — első felhasználó létrehozása után érhető el.
+```
+src/
+├── app/
+│   ├── (frontend)/   # Public routes
+│   └── (payload)/    # Payload admin panel
+├── access/           # Access-control functions
+├── blocks/           # Payload block configs + components
+├── collections/      # Collection definitions
+├── components/       # Shared React components
+├── globals/          # Header, Footer globals
+├── hooks/            # Reusable Payload hooks
+├── migrations/       # Database migrations
+├── plugins/          # Payload plugin configuration
+└── utilities/        # Shared helpers
+```
 
-## Scriptek
+## Prerequisites
 
-| Parancs                | Leírás                               |
-| ---------------------- | ------------------------------------ |
-| `pnpm dev`             | Next dev szerver                     |
-| `pnpm build`           | Production build                     |
-| `pnpm lint`            | ESLint                               |
-| `pnpm generate:types`  | Payload típusok (`payload-types.ts`) |
-| `pnpm payload:migrate` | DB migrációk (Postgres)              |
-| `pnpm test`            | Vitest + Playwright                  |
+- **Node.js** >= 20.9.0
+- **pnpm** >= 9
+- A PostgreSQL database (Vercel Postgres or local)
+- Vercel Blob token (for media uploads; optional locally)
 
-## Folyamat (branch → éles)
+## Getting started
 
-1. **Lokálisan:** `pnpm dev`, változtatás, `pnpm lint` + `pnpm exec tsc --noEmit` (és ha kell séma: `pnpm generate:types`, migráció: `pnpm payload:migrate`).
-2. **Commit → push → PR:** a GitHubon **CI** lefut (lint + TypeScript).
-3. **Vercel:** a saját branchjeid / feature PR-jeidhez **Preview** URL; `main` merge után **Production**. A **Dependabot** commitokra nem fut Vercel build ([`vercel.json`](vercel.json) — sorban állás / felesleges preview elkerülése); a GitHub **CI** továbbra is lefut a PR-en.
-4. **Séma változásnál** a migrációkat commitold; élesen a build előtt/után fusson a `payload migrate` (Vercel **Build Command** / **Deploy Hook** / külön job — ezt érdemes külön beállítani).
+1. **Install dependencies**
 
-## CI
+   ```bash
+   pnpm install
+   ```
 
-A [`.github/workflows/ci.yml`](.github/workflows/ci.yml) minden `main`/`master` pushra és PR-re fut: `pnpm lint`, `tsc --noEmit`. Manuálisan: **Actions → CI → Run workflow**. A teljes `pnpm build` és a DB-t igénylő `pnpm test:int` nincs a CI-ban alapból (env / Postgres kellene); helyben futtasd őket merge előtt.
+2. **Configure environment**
 
-[Dependabot](.github/dependabot.yml): heti **egy** összevont npm PR (csoportosítva), havi GitHub Actions — kevesebb PR, kevesebb zaj. A **`next`** automatikus **minor/major** Dependabot bumpja ki van zárva (a `@payloadcms/next` peer deklarációja hivatalosan még `<15.5.0` vagy a 16.2 canary ág); a repóban **`pnpm.peerDependencyRules.allowedVersions`** engedi a **Next 15.5.x** + Payload 3.x együttállást (lásd `package.json`). Ha a Payload frissül és a peer range bővül, ez a szabály eltávolítható.
+   Copy `.env.example` to `.env.local` and fill in the required values.
 
-### `main` branch védelem (ajánlott)
+3. **Run database migrations**
 
-A GitHub figyelmeztetése („Your main branch isn't protected”) — érdemes bekapcsolni:
+   ```bash
+   pnpm payload:migrate
+   ```
 
-1. Repo **Settings → Rules → Rulesets** (vagy **Branches → Branch protection rule**).
-2. **Add rule** / **Add branch ruleset** — cél: `main`.
-3. Kapcsold be: **Require a pull request before merging** (opcionálisan review), **Require status checks to pass** — a listában a **zöld CI** után megjelenő nevet add meg (tipikusan **`CI / lint-and-typecheck`** vagy **`lint-and-typecheck`**). Ne olyan nevet várj, ami sosem jelenik meg („Expected — Waiting…”) — a GitHub a **job azonosító** (`lint-and-typecheck`) alapján is listázhat, nem a `name: Lint & TypeScript` felirat alapján.
-4. Opcionális: **Do not allow bypassing the above settings** (admin kivétel nélkül).
+4. **Start the dev server**
 
-Így nem lehet véletlenül zöld CI nélkül merge-elni a `main`-re.
+   ```bash
+   pnpm dev
+   ```
 
-Payload dokumentáció: [payloadcms.com/docs](https://payloadcms.com/docs)
+   Open [http://localhost:3000](http://localhost:3000). The admin panel is at `/admin` — create the first user on first visit.
+
+## Scripts
+
+| Command                  | Description                                      |
+| ------------------------ | ------------------------------------------------ |
+| `pnpm dev`               | Start Next.js development server                 |
+| `pnpm build`             | Production build (import map + migrate + Next.js) |
+| `pnpm start`             | Start production server                          |
+| `pnpm lint`              | Run ESLint                                       |
+| `pnpm lint:fix`          | Run ESLint with auto-fix                         |
+| `pnpm exec tsc --noEmit` | TypeScript type-check                            |
+| `pnpm generate:types`    | Regenerate `payload-types.ts`                    |
+| `pnpm generate:importmap`| Regenerate Payload import map                    |
+| `pnpm payload:migrate`   | Run database migrations                          |
+| `pnpm test`              | Run all tests (Vitest + Playwright)              |
+| `pnpm test:int`          | Run integration tests (Vitest)                   |
+| `pnpm test:e2e`          | Run end-to-end tests (Playwright)                |
+
+## Branch model
+
+This project follows a **GitFlow-light** workflow:
+
+| Branch             | Purpose                              | Deploys to         |
+| ------------------ | ------------------------------------ | ------------------ |
+| `main`             | Production-only, protected           | Production         |
+| `develop`          | Integration branch                   | Preview / Staging  |
+| `feature/<scope>`  | One concern per branch, small PRs    | Preview            |
+| `release/<scope>`  | Hardening before production merge    | Preview            |
+| `hotfix/<issue>`   | Emergency production fix             | Production         |
+
+**Flow:** `feature/*` → `develop` → `release/*` → `main`. Hotfixes merge to both `main` and `develop`.
+
+## CI / CD
+
+### GitHub Actions (`.github/workflows/ci.yml`)
+
+Runs on every push to `main` / `develop` and on pull requests targeting those branches:
+
+1. **Lint** — ESLint
+2. **Typecheck** — `tsc --noEmit`
+3. **Unit tests** — Vitest (tests that do not require a database)
+
+A full production `build` requires database access and runs on Vercel during deployment, not in GitHub Actions.
+
+### Vercel
+
+- Human commits trigger preview and production deploys.
+- Dependabot commits are skipped by `vercel.json` `ignoreCommand` to avoid unnecessary preview builds. CI still validates these PRs.
+
+### Dependabot
+
+- **npm**: weekly, grouped PRs (ESLint excluded from the bulk group).
+- **GitHub Actions**: monthly, grouped.
+- Next.js minor/major bumps are ignored to prevent Payload peer-dependency breakage. Upgrade manually after verifying compatibility.
+
+## Environment configuration
+
+All required variables are documented in `.env.example`. Development uses `.env.local` (gitignored) which points to a dedicated development database and Vercel Blob storage.
+
+| Variable                    | Required | Description                             |
+| --------------------------- | -------- | --------------------------------------- |
+| `POSTGRES_URL`              | Yes      | PostgreSQL connection string            |
+| `PAYLOAD_SECRET`            | Yes      | JWT / session encryption key            |
+| `NEXT_PUBLIC_SERVER_URL`    | No       | Public site URL (defaults to localhost) |
+| `CRON_SECRET`               | No       | Bearer token for Payload job endpoints  |
+| `PREVIEW_SECRET`            | No       | Live preview URL validation             |
+| `BLOB_READ_WRITE_TOKEN`    | No       | Vercel Blob upload token                |
+
+## Migration policy
+
+Database schema changes **must** follow this protocol:
+
+1. **Create the migration** in the same feature branch as the schema change:
+   ```bash
+   pnpm payload migrate:create
+   ```
+2. **Commit** the migration file alongside the code change.
+3. **Verify** the migration runs successfully on the development database before opening a PR.
+4. Migrations must be **incremental** — never bundle unrelated schema changes in one migration.
+5. The production build command (`pnpm build`) runs `payload migrate` automatically before `next build`.
+
+## Testing
+
+### Unit / Integration (Vitest)
+
+- **Unit tests** (`tests/unit/`): pure function coverage for access control, URL utilities, and other helpers. No database required.
+- **Integration tests** (`tests/int/`): Payload API tests that require a running PostgreSQL instance.
+
+### End-to-end (Playwright)
+
+- **Frontend** (`tests/e2e/frontend.e2e.spec.ts`): homepage rendering and 404 behavior.
+- **Admin** (`tests/e2e/admin.e2e.spec.ts`): login, dashboard navigation, page creation.
+- Requires a running dev server and database. Configure `PLAYWRIGHT_BASE_URL` if not using the default `http://localhost:3000`.
+
+## Resources
+
+- [Payload CMS documentation](https://payloadcms.com/docs)
+- [Next.js documentation](https://nextjs.org/docs)
+- [Vercel documentation](https://vercel.com/docs)
