@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
     "strict": true,
-    "ignoreDeprecations": "5.0",
-    "baseUrl": ".",
     "esModuleInterop": true,
     "target": "ES2022",
     "lib": [
@@ -26,6 +24,9 @@
       }
     ],
     "paths": {
+      "src/*": [
+        "./src/*"
+      ],
       "@payload-config": [
         "./src/payload.config.ts"
       ],
