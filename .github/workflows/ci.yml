@@ -109,6 +109,10 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     env:
+      # Same as integration job: not production so Drizzle can push schema on first Payload connect.
+      # `pnpm build` runs `payload migrate` first; migrate expects core tables, so we bootstrap below.
+      # See tests/int/README.md.
+      NODE_ENV: test
       CI: true
       POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ci_test
       PAYLOAD_SECRET: ci-github-actions-payload-secret-not-for-production
@@ -130,6 +134,9 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap Postgres schema (Drizzle push)
+        run: pnpm run ci:bootstrap-postgres
 
       - name: Build
         run: pnpm build
