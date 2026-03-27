@@ -5,7 +5,6 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "ci:bootstrap-postgres": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" NODE_ENV=test tsx scripts/ci-bootstrap-postgres.ts",
     "build": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap && cross-env NODE_OPTIONS=--no-deprecation payload migrate && cross-env NODE_OPTIONS=--no-deprecation next build",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
