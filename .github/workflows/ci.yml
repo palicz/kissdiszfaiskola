@@ -42,3 +42,10 @@ jobs:
 
       - name: Unit tests (with coverage)
         run: pnpm run test:unit
+
+      # When POSTGRES_URL / PAYLOAD_SECRET are not in repo secrets, tests skip (same as local without .env.local).
+      - name: Integration tests (Vitest + Payload)
+        env:
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+        run: pnpm run test:int

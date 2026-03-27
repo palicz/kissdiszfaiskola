@@ -1,5 +1,11 @@
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { config as loadEnv } from 'dotenv'
 import { defineConfig, devices } from '@playwright/test'
-import 'dotenv/config'
+
+const root = path.dirname(fileURLToPath(import.meta.url))
+loadEnv({ path: path.resolve(root, '.env') })
+loadEnv({ path: path.resolve(root, '.env.local'), override: true })
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000'
 

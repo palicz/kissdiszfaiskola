@@ -45,6 +45,7 @@ export default defineConfig({
         '**/.next/**',
         '**/tests/**',
         '**/utilities/canUseDOM.ts',
+        '**/constants/e2eTestUser.ts',
       ],
       thresholds: {
         lines: 95,

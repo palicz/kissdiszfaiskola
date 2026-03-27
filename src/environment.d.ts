@@ -7,6 +7,8 @@ declare global {
       BLOB_READ_WRITE_TOKEN?: string
       CRON_SECRET?: string
       PREVIEW_SECRET?: string
+      /** Shared secret for POST/DELETE `/api/e2e-test-user` (local e2e only; optional in prod). */
+      E2E_SETUP_SECRET?: string
       VERCEL_URL?: string
       VERCEL_PROJECT_PRODUCTION_URL?: string
     }
