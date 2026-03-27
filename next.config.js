@@ -9,6 +9,8 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    // Next.js 16 will require explicit qualities for `quality` on <Image /> (e.g. 100 in blocks).
+    qualities: [75, 85, 100],
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)

@@ -8,7 +8,9 @@ test.describe('Frontend', () => {
   })
 
   test('returns 404 for non-existent routes', async ({ page }) => {
-    const response = await page.goto('/this-page-does-not-exist')
+    const response = await page.goto('/this-page-does-not-exist', {
+      waitUntil: 'domcontentloaded',
+    })
     expect(response?.status()).toBe(404)
   })
 })
