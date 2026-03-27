@@ -52,11 +52,10 @@ Colors use OKLCH: `--primary: oklch(0.205 0 0)` where values are lightness (0–
 Class-based toggle via `.dark` on the root element. In Next.js, use `next-themes`:
 
 ```tsx
-import { ThemeProvider } from "next-themes";
-
-<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+import { ThemeProvider } from 'next-themes'
+;<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
   {children}
-</ThemeProvider>;
+</ThemeProvider>
 ```
 
 ---
@@ -111,12 +110,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        warning: "oklch(var(--warning) / <alpha-value>)",
-        "warning-foreground": "oklch(var(--warning-foreground) / <alpha-value>)",
+        warning: 'oklch(var(--warning) / <alpha-value>)',
+        'warning-foreground': 'oklch(var(--warning-foreground) / <alpha-value>)',
       },
     },
   },
-};
+}
 ```
 
 ```tsx
@@ -181,7 +180,7 @@ export function ConfirmDialog({ title, description, onConfirm, children }) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }
 ```
 

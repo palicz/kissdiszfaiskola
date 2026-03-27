@@ -50,7 +50,7 @@ function ThreadComposer({ channelId }: { channelId: string }) {
         </Composer.Footer>
       </Composer.Frame>
     </ThreadProvider>
-  );
+  )
 }
 
 function EditMessageComposer({ messageId }: { messageId: string }) {
@@ -66,7 +66,7 @@ function EditMessageComposer({ messageId }: { messageId: string }) {
         </Composer.Footer>
       </Composer.Frame>
     </EditMessageProvider>
-  );
+  )
 }
 
 function ForwardMessageComposer({ messageId }: { messageId: string }) {
@@ -81,7 +81,7 @@ function ForwardMessageComposer({ messageId }: { messageId: string }) {
         </Composer.Footer>
       </Composer.Frame>
     </ForwardMessageProvider>
-  );
+  )
 }
 ```
 

@@ -24,7 +24,12 @@ describe('mergeOpenGraph', () => {
     const { mergeOpenGraph } = await import('@/utilities/mergeOpenGraph')
     const result = mergeOpenGraph({ title: 'Only' })
     expect(result?.images).toEqual([
-      { url: 'https://example.com/opengraph-image', width: 1200, height: 630, alt: 'Kiss Díszfaiskola' },
+      {
+        url: 'https://example.com/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Kiss Díszfaiskola',
+      },
     ])
   })
 

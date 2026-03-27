@@ -58,9 +58,8 @@ type Props = {
 }
 
 export function FooterSocialLinks({ links }: Props) {
-  const items = (links ?? []).filter(
-    (row): row is { platform: SocialPlatform; url: string } =>
-      Boolean(row?.url?.trim() && row?.platform),
+  const items = (links ?? []).filter((row): row is { platform: SocialPlatform; url: string } =>
+    Boolean(row?.url?.trim() && row?.platform),
   )
 
   if (items.length === 0) return null

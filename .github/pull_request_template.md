@@ -4,7 +4,7 @@
 
 ## Pre-merge checklist
 
-- [ ] `pnpm lint` and `pnpm exec tsc --noEmit` pass (or CI is green)
+- [ ] `pnpm format:check`, `pnpm lint`, and `pnpm exec tsc --noEmit` pass (or CI is green)
 - [ ] No unrelated changes included
 - [ ] Schema / migration changed? `pnpm generate:types` run, migration committed, verified on dev DB
 - [ ] Environment variables changed? `.env.example` updated

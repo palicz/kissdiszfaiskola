@@ -24,4 +24,3 @@ describe.skipIf(!hasDatabase)('Payload integration', () => {
     expect(Array.isArray(result.docs)).toBe(true)
   })
 })
-
