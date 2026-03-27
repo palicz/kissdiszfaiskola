@@ -111,7 +111,7 @@ Runs on every push to `main` / `develop` and on pull requests targeting those br
 2. **Lint** — ESLint
 3. **Typecheck** — `tsc --noEmit`
 4. **Unit tests** — Vitest with coverage thresholds
-5. **Integration tests** — separate job with a PostgreSQL service container: runs migrations then `pnpm test:int`
+5. **Integration tests** — separate job with a PostgreSQL service container and `pnpm test:int` (Drizzle schema push on first connect for an empty DB; see [`tests/int/README.md`](tests/int/README.md))
 
 A full production `build` requires database access and runs on Vercel during deployment, not in GitHub Actions.
 
