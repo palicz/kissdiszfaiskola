@@ -81,9 +81,10 @@ src/
 | `pnpm generate:types`     | Regenerate `payload-types.ts`                     |
 | `pnpm generate:importmap` | Regenerate Payload import map                     |
 | `pnpm payload:migrate`    | Run database migrations                           |
-| `pnpm test`               | Run all tests (Vitest + Playwright)               |
+| `pnpm test`               | Unit + integration tests (same as CI)             |
+| `pnpm test:all`           | Unit + integration + Playwright E2E (local)       |
 | `pnpm test:int`           | Run integration tests (Vitest)                    |
-| `pnpm test:e2e`           | Run end-to-end tests (Playwright)                 |
+| `pnpm test:e2e`           | Playwright E2E (local; not run in GitHub Actions) |
 
 After `pnpm install`, a **pre-commit** hook runs automatically via [Husky](https://github.com/typicode/husky): it runs [lint-staged](https://github.com/lint-staged/lint-staged) on staged files only — ESLint with `--fix`, then Prettier. Typecheck and tests stay in CI (and `pnpm test` when you want) so commits stay fast.
 

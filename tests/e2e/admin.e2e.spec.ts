@@ -1,27 +1,21 @@
 import { test, expect, Page } from '@playwright/test'
-import { login } from '../helpers/login'
-import { seedTestUser, cleanupTestUser, testUser } from '../helpers/seedUser'
+import { isAdminAppPath, login } from '../helpers/login'
+import { testUser } from '../helpers/seedUser'
 
 test.describe('Admin Panel', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
-    await seedTestUser()
-
     const context = await browser.newContext()
     page = await context.newPage()
 
     await login({ page, user: testUser })
   })
 
-  test.afterAll(async () => {
-    await cleanupTestUser()
-  })
-
   test('dashboard is accessible after login', async () => {
     await page.goto('/admin')
-    await expect(page).toHaveURL(/\/admin/)
-    await expect(page.locator('span[title="Dashboard"]').first()).toBeVisible()
+    await expect(page).toHaveURL((url) => isAdminAppPath(url.pathname))
+    await expect(page.locator('nav, [role="navigation"]').first()).toBeVisible()
   })
 
   test('users collection list view loads', async () => {

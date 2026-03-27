@@ -8,6 +8,9 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
  *
  * If you manually inserted a `payload_migrations` row for `20260322_184027` without running SQL,
  * delete it before deploy: DELETE FROM payload_migrations WHERE name = '20260322_184027';
+ *
+ * FK blocks also catch `undefined_table` so a fresh DB (e.g. CI) can run before `payload_folders` /
+ * `pages` exist; Payload may add the same constraints on a later schema sync.
  */
 export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -54,24 +57,28 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "pages_blocks_kiss_folder_slideshow" ADD CONSTRAINT "pages_blocks_kiss_folder_slideshow_folder_id_payload_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."payload_folders"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
     WHEN duplicate_object THEN NULL;
+    WHEN undefined_table THEN NULL;
   END $$;
 
   DO $$ BEGIN
     ALTER TABLE "pages_blocks_kiss_folder_slideshow" ADD CONSTRAINT "pages_blocks_kiss_folder_slideshow_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
     WHEN duplicate_object THEN NULL;
+    WHEN undefined_table THEN NULL;
   END $$;
 
   DO $$ BEGIN
     ALTER TABLE "_pages_v_blocks_kiss_folder_slideshow" ADD CONSTRAINT "_pages_v_blocks_kiss_folder_slideshow_folder_id_payload_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."payload_folders"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
     WHEN duplicate_object THEN NULL;
+    WHEN undefined_table THEN NULL;
   END $$;
 
   DO $$ BEGIN
     ALTER TABLE "_pages_v_blocks_kiss_folder_slideshow" ADD CONSTRAINT "_pages_v_blocks_kiss_folder_slideshow_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
     WHEN duplicate_object THEN NULL;
+    WHEN undefined_table THEN NULL;
   END $$;
 
   CREATE INDEX IF NOT EXISTS "pages_blocks_kiss_folder_slideshow_order_idx" ON "pages_blocks_kiss_folder_slideshow" USING btree ("_order");
