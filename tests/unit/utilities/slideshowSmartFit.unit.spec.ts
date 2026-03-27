@@ -21,13 +21,19 @@ describe('slideshowSmartFit', () => {
 
   it('uses cover when focal is set', () => {
     expect(
-      getSlideshowObjectFit(Object.assign({}, baseMedia, { focalX: 0.5, focalY: 0.5 }) as never, 16 / 9),
+      getSlideshowObjectFit(
+        Object.assign({}, baseMedia, { focalX: 0.5, focalY: 0.5 }) as never,
+        16 / 9,
+      ),
     ).toBe('cover')
   })
 
   it('uses contain when image is taller than container', () => {
     expect(
-      getSlideshowObjectFit(Object.assign({}, baseMedia, { width: 900, height: 2000 }) as never, 16 / 9),
+      getSlideshowObjectFit(
+        Object.assign({}, baseMedia, { width: 900, height: 2000 }) as never,
+        16 / 9,
+      ),
     ).toBe('contain')
   })
 
@@ -37,7 +43,10 @@ describe('slideshowSmartFit', () => {
 
   it('uses cover when image is wider than container', () => {
     expect(
-      getSlideshowObjectFit(Object.assign({}, baseMedia, { width: 3200, height: 900 }) as never, 16 / 9),
+      getSlideshowObjectFit(
+        Object.assign({}, baseMedia, { width: 3200, height: 900 }) as never,
+        16 / 9,
+      ),
     ).toBe('cover')
   })
 })
