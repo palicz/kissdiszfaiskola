@@ -81,7 +81,8 @@ src/
 | `pnpm generate:types`     | Regenerate `payload-types.ts`                     |
 | `pnpm generate:importmap` | Regenerate Payload import map                     |
 | `pnpm payload:migrate`    | Run database migrations                           |
-| `pnpm test`               | Run all tests (Vitest + Playwright)               |
+| `pnpm test`               | Unit + integration tests (same as CI)             |
+| `pnpm test:all`           | Unit + integration + Playwright E2E (local)       |
 | `pnpm test:int`           | Run integration tests (Vitest)                    |
 | `pnpm test:e2e`           | Run end-to-end tests (Playwright)                 |
 
