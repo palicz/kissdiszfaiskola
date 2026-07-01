@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v6
         with:
@@ -72,7 +72,7 @@ jobs:
       PAYLOAD_SECRET: ci-github-actions-payload-secret-not-for-production
       NEXT_PUBLIC_SERVER_URL: http://localhost:3000
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v6
         with:
