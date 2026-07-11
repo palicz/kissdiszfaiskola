@@ -110,9 +110,8 @@ Runs on every push to `main` / `develop` and on pull requests targeting those br
 1. **Format** — Prettier (`format:check`)
 2. **Lint** — ESLint
 3. **Typecheck** — `tsc --noEmit`
-4. **Build** — import map generation + `next build` (compile smoke; skips `payload migrate` on empty CI Postgres — see [`tests/int/README.md`](tests/int/README.md))
-5. **Unit tests** — Vitest with coverage thresholds
-6. **Integration tests** — separate job with a PostgreSQL service container and `pnpm test:int` (Drizzle schema push on first connect for an empty DB; see [`tests/int/README.md`](tests/int/README.md))
+4. **Unit tests** — Vitest with coverage thresholds
+5. **Integration tests** — PostgreSQL service, `pnpm test:int`, then import map + `next build` compile smoke (see [`tests/int/README.md`](tests/int/README.md))
 
 Production deploys on Vercel run the full `pnpm build` including `payload migrate` against an existing database.
 

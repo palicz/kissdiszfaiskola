@@ -19,25 +19,6 @@ jobs:
     name: Quality Gates
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ci_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-    env:
-      NODE_ENV: test
-      POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ci_test
-      PAYLOAD_SECRET: ci-github-actions-payload-secret-not-for-production
-      NEXT_PUBLIC_SERVER_URL: http://localhost:3000
     steps:
       - uses: actions/checkout@v7
 
@@ -62,19 +43,13 @@ jobs:
       - name: Typecheck
         run: pnpm exec tsc --noEmit
 
-      - name: Build
-        # Fresh CI Postgres cannot bootstrap via incremental migrate (see tests/int/README.md).
-        run: |
-          pnpm exec cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
-          pnpm exec cross-env NODE_OPTIONS=--no-deprecation next build
-
       - name: Unit tests (with coverage)
         run: pnpm run test:unit
 
   integration:
     name: Integration (Payload + Postgres)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     services:
       postgres:
         image: postgres:16-alpine
@@ -113,3 +88,9 @@ jobs:
 
       - name: Integration tests
         run: pnpm run test:int
+
+      - name: Build
+        # Runs after test:int schema push so generateStaticParams can connect (see tests/int/README.md).
+        run: |
+          pnpm exec cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
+          pnpm exec cross-env NODE_OPTIONS=--no-deprecation next build
