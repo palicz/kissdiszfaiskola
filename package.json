@@ -96,6 +96,13 @@
     "pnpm": "^9 || ^10"
   },
   "pnpm": {
+    "overrides": {
+      "dompurify": "3.4.12",
+      "esbuild": "0.28.1",
+      "js-yaml": "4.3.0",
+      "postcss": "8.5.17",
+      "jsdom>undici": "7.28.0"
+    },
     "onlyBuiltDependencies": [
       "sharp",
       "esbuild",
