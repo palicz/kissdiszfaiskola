@@ -8,8 +8,8 @@ Content-managed website for Kiss Diszfaiskola, built with [Next.js](https://next
 
 | Layer            | Technology                   |
 | ---------------- | ---------------------------- |
-| Framework        | Next.js 15 (App Router)      |
-| CMS              | Payload CMS 3                |
+| Framework        | Next.js 16 (App Router)      |
+| CMS              | Payload CMS 3.86             |
 | Database         | PostgreSQL (Vercel Postgres) |
 | Media storage    | Vercel Blob                  |
 | Rich text editor | Lexical                      |
@@ -111,9 +111,9 @@ Runs on every push to `main` / `develop` and on pull requests targeting those br
 2. **Lint** — ESLint
 3. **Typecheck** — `tsc --noEmit`
 4. **Unit tests** — Vitest with coverage thresholds
-5. **Integration tests** — separate job with a PostgreSQL service container and `pnpm test:int` (Drizzle schema push on first connect for an empty DB; see [`tests/int/README.md`](tests/int/README.md))
+5. **Integration tests** — PostgreSQL service, `pnpm test:int`, then import map + `next build` compile smoke (see [`tests/int/README.md`](tests/int/README.md))
 
-A full production `build` requires database access and runs on Vercel during deployment, not in GitHub Actions.
+Production deploys on Vercel run the full `pnpm build` including `payload migrate` against an existing database.
 
 ### Vercel
 
@@ -124,7 +124,7 @@ A full production `build` requires database access and runs on Vercel during dep
 
 - **npm**: weekly, grouped PRs (ESLint excluded from the bulk group).
 - **GitHub Actions**: monthly, grouped.
-- Next.js minor/major bumps are ignored to prevent Payload peer-dependency breakage. Upgrade manually after verifying compatibility.
+- Next.js minor/major bumps are ignored to prevent Payload peer-dependency breakage. The stack is Next.js 16 and Payload 3.86; upgrade manually after verifying compatibility.
 
 ## Environment configuration
 

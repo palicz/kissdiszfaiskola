@@ -49,7 +49,7 @@ jobs:
   integration:
     name: Integration (Payload + Postgres)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     services:
       postgres:
         image: postgres:16-alpine
@@ -88,3 +88,17 @@ jobs:
 
       - name: Integration tests
         run: pnpm run test:int
+
+      - name: Clear dev schema-push migration markers
+        # test:int leaves Drizzle dev-push rows (batch = -1); production Payload migrate prompts interactively.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq -y postgresql-client
+          psql "$POSTGRES_URL" -v ON_ERROR_STOP=1 -c 'DELETE FROM payload_migrations WHERE batch = -1;'
+
+      - name: Build
+        # Runs after test:int schema push so generateStaticParams can connect (see tests/int/README.md).
+        run: |
+          pnpm exec cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
+          pnpm exec cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation payload migrate
+          pnpm exec cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation next build
