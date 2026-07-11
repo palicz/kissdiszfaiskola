@@ -4,16 +4,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 3
-    # @payloadcms/next peers allow next >=15.5.x; auto-bumping minor/major
-    # risks breaking the peer constraint. Bump manually after verifying
-    # compatibility with the Payload release notes.
+    open-pull-requests-limit: 5
     ignore:
       - dependency-name: 'next'
         update-types:
           - 'version-update:semver-minor'
           - 'version-update:semver-major'
-      # Stay on eslint-config-next 15.x until Next.js is upgraded (must match app major).
       - dependency-name: 'eslint-config-next'
         update-types:
           - 'version-update:semver-major'
@@ -21,8 +17,6 @@ updates:
       npm-dependencies:
         patterns:
           - '*'
-        # ESLint ecosystem updates are excluded from the bulk group to avoid
-        # circular-structure-to-JSON and flat-config compatibility issues.
         exclude-patterns:
           - 'eslint*'
           - '@eslint/*'

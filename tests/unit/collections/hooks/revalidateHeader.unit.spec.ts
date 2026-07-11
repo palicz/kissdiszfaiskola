@@ -1,29 +1,29 @@
 import { describe, it, expect, vi } from 'vitest'
 import { revalidateHeader } from '@/Header/hooks/revalidateHeader'
 
-vi.mock('next/cache', () => ({
-  revalidateTag: vi.fn(),
+const revalidateCacheTagMock = vi.fn()
+
+vi.mock('@/utilities/revalidateCacheTag', () => ({
+  revalidateCacheTag: (...args: unknown[]) => revalidateCacheTagMock(...args),
 }))
 
 describe('revalidateHeader', () => {
   it('revalidates when revalidation enabled', async () => {
-    const { revalidateTag } = await import('next/cache')
     const doc = { id: 'h' }
     await revalidateHeader({
       doc,
       req: { payload: { logger: { info: vi.fn() } }, context: {} },
     } as never)
-    expect(revalidateTag).toHaveBeenCalledWith('global_header')
+    expect(revalidateCacheTagMock).toHaveBeenCalledWith('global_header')
   })
 
   it('skips when disableRevalidate is set', async () => {
-    const { revalidateTag } = await import('next/cache')
-    vi.mocked(revalidateTag).mockClear()
+    revalidateCacheTagMock.mockClear()
     const doc = { id: 'h' }
     await revalidateHeader({
       doc,
       req: { payload: { logger: { info: vi.fn() } }, context: { disableRevalidate: true } },
     } as never)
-    expect(revalidateTag).not.toHaveBeenCalled()
+    expect(revalidateCacheTagMock).not.toHaveBeenCalled()
   })
 })

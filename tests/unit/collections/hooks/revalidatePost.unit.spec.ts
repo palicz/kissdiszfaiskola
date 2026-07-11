@@ -2,17 +2,20 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { revalidateDelete, revalidatePost } from '@/collections/Posts/hooks/revalidatePost'
 
 const revalidatePathMock = vi.fn()
-const revalidateTagMock = vi.fn()
+const revalidateCacheTagMock = vi.fn()
 
 vi.mock('next/cache', () => ({
   revalidatePath: (...args: unknown[]) => revalidatePathMock(...args),
-  revalidateTag: (...args: unknown[]) => revalidateTagMock(...args),
+}))
+
+vi.mock('@/utilities/revalidateCacheTag', () => ({
+  revalidateCacheTag: (...args: unknown[]) => revalidateCacheTagMock(...args),
 }))
 
 describe('revalidatePost hooks', () => {
   beforeEach(() => {
     revalidatePathMock.mockClear()
-    revalidateTagMock.mockClear()
+    revalidateCacheTagMock.mockClear()
   })
 
   it('revalidates path for published post', async () => {
@@ -23,7 +26,17 @@ describe('revalidatePost hooks', () => {
       req: { payload: { logger: { info: vi.fn() } }, context: {} },
     } as never)
     expect(revalidatePathMock).toHaveBeenCalledWith('/posts/hello')
-    expect(revalidateTagMock).toHaveBeenCalledWith('posts-sitemap')
+    expect(revalidateCacheTagMock).toHaveBeenCalledWith('posts-sitemap')
+  })
+
+  it('handles undefined previousDoc on create', async () => {
+    const doc = { _status: 'published' as const, slug: 'new-post' }
+    await revalidatePost({
+      doc,
+      previousDoc: undefined,
+      req: { payload: { logger: { info: vi.fn() } }, context: {} },
+    } as never)
+    expect(revalidatePathMock).toHaveBeenCalledWith('/posts/new-post')
   })
 
   it('revalidates old slug when unpublishing', async () => {
@@ -38,13 +51,13 @@ describe('revalidatePost hooks', () => {
   })
 
   it('skips when disableRevalidate is set', async () => {
-    revalidatePathMock.mockClear()
     await revalidatePost({
       doc: { _status: 'published' as const, slug: 'x' },
       previousDoc: { _status: 'published' as const, slug: 'x' },
       req: { payload: { logger: { info: vi.fn() } }, context: { disableRevalidate: true } },
     } as never)
     expect(revalidatePathMock).not.toHaveBeenCalled()
+    expect(revalidateCacheTagMock).not.toHaveBeenCalled()
   })
 
   it('revalidateDelete removes post path', async () => {

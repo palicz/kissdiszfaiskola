@@ -8,8 +8,8 @@ Content-managed website for Kiss Diszfaiskola, built with [Next.js](https://next
 
 | Layer            | Technology                   |
 | ---------------- | ---------------------------- |
-| Framework        | Next.js 15 (App Router)      |
-| CMS              | Payload CMS 3                |
+| Framework        | Next.js 16 (App Router)      |
+| CMS              | Payload CMS 3.86             |
 | Database         | PostgreSQL (Vercel Postgres) |
 | Media storage    | Vercel Blob                  |
 | Rich text editor | Lexical                      |
@@ -124,7 +124,7 @@ A full production `build` requires database access and runs on Vercel during dep
 
 - **npm**: weekly, grouped PRs (ESLint excluded from the bulk group).
 - **GitHub Actions**: monthly, grouped.
-- Next.js minor/major bumps are ignored to prevent Payload peer-dependency breakage. Upgrade manually after verifying compatibility.
+- Next.js minor/major bumps are ignored to prevent Payload peer-dependency breakage. The stack is Next.js 16 and Payload 3.86; upgrade manually after verifying compatibility.
 
 ## Environment configuration
 

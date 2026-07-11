@@ -19,6 +19,24 @@ jobs:
     name: Quality Gates
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ci_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ci_test
+      PAYLOAD_SECRET: ci-github-actions-payload-secret-not-for-production
+      NEXT_PUBLIC_SERVER_URL: http://localhost:3000
     steps:
       - uses: actions/checkout@v7
 
@@ -42,6 +60,9 @@ jobs:
 
       - name: Typecheck
         run: pnpm exec tsc --noEmit
+
+      - name: Build
+        run: pnpm build
 
       - name: Unit tests (with coverage)
         run: pnpm run test:unit
