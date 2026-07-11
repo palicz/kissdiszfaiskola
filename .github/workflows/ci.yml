@@ -34,6 +34,7 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     env:
+      NODE_ENV: test
       POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ci_test
       PAYLOAD_SECRET: ci-github-actions-payload-secret-not-for-production
       NEXT_PUBLIC_SERVER_URL: http://localhost:3000
@@ -62,7 +63,10 @@ jobs:
         run: pnpm exec tsc --noEmit
 
       - name: Build
-        run: pnpm build
+        # Fresh CI Postgres cannot bootstrap via incremental migrate (see tests/int/README.md).
+        run: |
+          pnpm exec cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
+          pnpm exec cross-env NODE_OPTIONS=--no-deprecation next build
 
       - name: Unit tests (with coverage)
         run: pnpm run test:unit
