@@ -18,9 +18,14 @@ describe('getMediaUrl', () => {
     expect(getMediaUrl('https://blob/x.png', 'v1')).toBe('https://blob/x.png?v1')
   })
 
-  it('prefixes relative paths with client base URL', async () => {
+  it('keeps root-relative paths for same-origin next/image', async () => {
     const { getMediaUrl } = await import('@/utilities/getMediaUrl')
-    expect(getMediaUrl('/media/x.png')).toBe('https://app.example/media/x.png')
-    expect(getMediaUrl('/media/x.png', 'tag')).toBe('https://app.example/media/x.png?tag')
+    expect(getMediaUrl('/media/x.png')).toBe('/media/x.png')
+    expect(getMediaUrl('/api/media/file/x.webp', 'tag')).toBe('/api/media/file/x.webp?tag')
+  })
+
+  it('prefixes non-root-relative paths with client base URL', async () => {
+    const { getMediaUrl } = await import('@/utilities/getMediaUrl')
+    expect(getMediaUrl('media/x.png')).toBe('https://app.example/media/x.png')
   })
 })

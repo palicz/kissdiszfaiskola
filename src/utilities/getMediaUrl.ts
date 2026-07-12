@@ -18,6 +18,11 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
+  // Same-origin Payload/Blob paths — keep relative so next/image works on every deployment
+  if (url.startsWith('/')) {
+    return cacheTag ? `${url}?${cacheTag}` : url
+  }
+
   // Otherwise prepend client-side URL
   const baseUrl = getClientSideURL()
   return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
