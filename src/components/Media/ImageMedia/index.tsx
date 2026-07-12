@@ -34,14 +34,6 @@ function objectFitStyleFromImgClassName(imgClassName?: string): React.CSSPropert
   return undefined
 }
 
-/**
- * ImageMedia
- *
- * This component passes a **relative** `src` (e.g. `/media/...`) to Next.js Image.
- * The `getMediaUrl` utility constructs the full URL by prepending the base URL from env vars
- * (NEXT_PUBLIC_SERVER_URL). Next.js then optimizes this using `remotePatterns` configured
- * in next.config.js — no custom `loader` needed.
- */
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
     alt: altFromProps,
@@ -99,15 +91,16 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const { alt: altFromResource, filename, height: fullHeight, url, width: fullWidth } = resource
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
 
     const cacheTag = resource.updatedAt
+    const mediaUrl = filename ? `/api/media/file/${filename}` : url
 
-    src = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(mediaUrl, cacheTag)
   }
 
   const objectPositionFromFocal =

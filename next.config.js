@@ -8,7 +8,16 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingIncludes: {
+    '**/*': [
+      'node_modules/@img/sharp-libvips-linux-x64/**',
+      'node_modules/@img/sharp-linux-x64/**',
+      'node_modules/@img/sharp-libvips-linuxmusl-x64/**',
+      'node_modules/@img/sharp-linuxmusl-x64/**',
+    ],
+  },
   images: {
+    qualities: [75, 100],
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)

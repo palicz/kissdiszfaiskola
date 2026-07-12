@@ -15,13 +15,16 @@ import { Header } from './Header/config'
 import { plugins as payloadPlugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-import { migrations } from './migrations'
+import { isVercelBlobTokenValid } from './utilities/vercelBlob'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { hu } from '@payloadcms/translations/languages/hu'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+const blobStorageEnabled = isVercelBlobTokenValid(blobToken)
 
 export default buildConfig({
   i18n: {
@@ -61,18 +64,15 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL || '',
-    },
-    prodMigrations: migrations,
-  }),
+  db: vercelPostgresAdapter(),
+  serverURL: getServerSideURL(),
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
     vercelBlobStorage({
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      enabled: blobStorageEnabled,
+      token: blobToken,
       collections: { media: true },
     }),
     ...payloadPlugins,

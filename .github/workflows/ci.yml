@@ -101,4 +101,4 @@ jobs:
         run: |
           pnpm exec cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
           pnpm exec cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation payload migrate
-          pnpm exec cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation next build
+          pnpm exec cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation next build --webpack
