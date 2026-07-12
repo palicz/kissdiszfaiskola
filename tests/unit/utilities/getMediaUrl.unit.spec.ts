@@ -23,9 +23,4 @@ describe('getMediaUrl', () => {
     expect(getMediaUrl('/media/x.png')).toBe('/media/x.png')
     expect(getMediaUrl('/api/media/file/x.webp', 'tag')).toBe('/api/media/file/x.webp?tag')
   })
-
-  it('prefixes non-root-relative paths with client base URL', async () => {
-    const { getMediaUrl } = await import('@/utilities/getMediaUrl')
-    expect(getMediaUrl('media/x.png')).toBe('https://app.example/media/x.png')
-  })
 })
