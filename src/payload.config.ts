@@ -16,7 +16,6 @@ import { plugins as payloadPlugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { isVercelBlobTokenValid } from './utilities/vercelBlob'
-import { migrations } from './migrations'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { hu } from '@payloadcms/translations/languages/hu'
@@ -65,9 +64,7 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  db: vercelPostgresAdapter({
-    prodMigrations: migrations,
-  }),
+  db: vercelPostgresAdapter(),
   serverURL: getServerSideURL(),
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

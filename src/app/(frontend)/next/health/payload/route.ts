@@ -1,6 +1,3 @@
-import { getPayload } from 'payload'
-import config from '@payload-config'
-
 import { getVercelBlobStoreId, isVercelBlobTokenValid } from '@/utilities/vercelBlob'
 
 const DEFAULT_PROBE_FILENAME = 'img1.webp'
@@ -45,6 +42,8 @@ export async function GET(request: Request): Promise<Response> {
   }
 
   try {
+    const { getPayload } = await import('payload')
+    const config = (await import('@payload-config')).default
     const payload = await getPayload({ config: await config })
     result.payloadBoot = { ok: true, error: null }
 
