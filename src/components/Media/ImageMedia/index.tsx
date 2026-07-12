@@ -99,15 +99,16 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const { alt: altFromResource, filename, height: fullHeight, url, width: fullWidth } = resource
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
 
     const cacheTag = resource.updatedAt
+    const mediaUrl = filename && typeof filename === 'string' ? `/api/media/file/${filename}` : url
 
-    src = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(mediaUrl, cacheTag)
   }
 
   const objectPositionFromFocal =

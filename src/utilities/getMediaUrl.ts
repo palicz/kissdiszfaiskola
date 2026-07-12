@@ -1,5 +1,37 @@
 import { getClientSideURL } from '@/utilities/getURL'
 
+const PAYLOAD_MEDIA_PATH = /^\/api\/media\/file\//
+const BLOB_HOST = /\.public\.blob\.vercel-storage\.com$/i
+
+function appendCacheTag(path: string, cacheTag?: string | null): string {
+  if (!cacheTag?.trim()) return path
+  const separator = path.includes('?') ? '&' : '?'
+  return `${path}${separator}v=${encodeURIComponent(cacheTag.trim())}`
+}
+
+/** Strip host from stored Payload API URLs so next/image works on every deployment. */
+export function normalizeMediaUrl(url: string): string {
+  if (url.startsWith('/')) {
+    return url.split('?')[0] ?? url
+  }
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    try {
+      const parsed = new URL(url)
+      if (PAYLOAD_MEDIA_PATH.test(parsed.pathname)) {
+        return parsed.pathname
+      }
+      if (BLOB_HOST.test(parsed.hostname)) {
+        return url.split('?')[0] ?? url
+      }
+    } catch {
+      return url
+    }
+  }
+
+  return url
+}
+
 /**
  * Processes media resource URL to ensure proper formatting
  * @param url The original URL from the resource
@@ -9,21 +41,16 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
-  if (cacheTag && cacheTag !== '') {
-    cacheTag = encodeURIComponent(cacheTag)
+  const normalized = normalizeMediaUrl(url)
+
+  if (normalized.startsWith('http://') || normalized.startsWith('https://')) {
+    return appendCacheTag(normalized, cacheTag)
   }
 
-  // Check if URL already has http/https protocol
-  if (url.startsWith('http://') || url.startsWith('https://')) {
-    return cacheTag ? `${url}?${cacheTag}` : url
+  if (normalized.startsWith('/')) {
+    return appendCacheTag(normalized, cacheTag)
   }
 
-  // Same-origin Payload/Blob paths — keep relative so next/image works on every deployment
-  if (url.startsWith('/')) {
-    return cacheTag ? `${url}?${cacheTag}` : url
-  }
-
-  // Otherwise prepend client-side URL
   const baseUrl = getClientSideURL()
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  return appendCacheTag(`${baseUrl}${normalized.startsWith('/') ? '' : '/'}${normalized}`, cacheTag)
 }
