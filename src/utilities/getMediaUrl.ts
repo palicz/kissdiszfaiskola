@@ -9,8 +9,7 @@ function appendCacheTag(path: string, cacheTag?: string | null): string {
   return `${path}${separator}v=${encodeURIComponent(cacheTag.trim())}`
 }
 
-/** Strip host from stored Payload API URLs so next/image works on every deployment. */
-export function normalizeMediaUrl(url: string): string {
+function normalizeMediaUrl(url: string): string {
   if (url.startsWith('/')) {
     return url.split('?')[0] ?? url
   }
